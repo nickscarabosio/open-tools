@@ -36,8 +36,8 @@
     -webkit-font-smoothing: antialiased;
   }
   .wrap {
-    width: min(1280px, calc(100% - 24px));
-    margin: 18px auto 32px;
+    width: min(1360px, calc(100% - 20px));
+    margin: 16px auto 28px;
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: 24px;
     overflow: hidden;
@@ -121,6 +121,15 @@
     color: var(--soft);
     text-transform: uppercase;
     letter-spacing: .16em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .section-label .subtle {
+    color: var(--muted);
+    text-transform: none;
+    letter-spacing: 0;
   }
   .prompt-list { display: grid; gap: 14px; }
   details {
@@ -168,6 +177,57 @@
     flex-wrap: wrap;
     gap: 10px;
     margin: 0 0 14px;
+  }
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .tool-card {
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 18px;
+    padding: 18px;
+    background: rgba(255,255,255,0.02);
+    min-height: 166px;
+  }
+  .tool-card.ghost {
+    border-style: dashed;
+    background: linear-gradient(180deg, rgba(15, 18, 34, 0.88), rgba(11, 13, 25, 0.92));
+  }
+  .tool-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .tool-id {
+    font-family: var(--mono);
+    color: var(--soft);
+    font-size: 12px;
+    letter-spacing: .12em;
+  }
+  .tool-chip {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: #ddd2ff;
+    border: 1px solid rgba(157,108,255,0.18);
+    background: rgba(157,108,255,0.08);
+    padding: 5px 8px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+  }
+  .tool-card h2 {
+    margin: 0 0 8px;
+    font-size: 1.02rem;
+  }
+  .tool-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+    font-size: .95rem;
   }
   button, a.btn {
     appearance: none;
@@ -255,23 +315,51 @@
 
     <main class="content">
       <section class="hero">
-        <div class="eyebrow">open tools / prompt pack</div>
-        <h1>Five prompts that are easy to find, copy, and reuse.</h1>
-        <p class="lede">I stripped the extra fake UI back out. This page should now feel clean and direct: just the 5 prompts, each with a clear title, a short note, a permalink, and a one-click copy action.</p>
+        <div class="eyebrow">open tools / evolving library</div>
+        <h1>Tools first. Prompts inside. Always growing.</h1>
+        <p class="lede">Open Tools is the home for reusable systems, workflows, and prompt modules. The 5 prompts below are just one section of the library, not the whole thing, and new tools can be added over time without changing the structure.</p>
         <div class="meta">
-          <span>plain share page</span>
-          <span>copyable text</span>
-          <span>individual anchors</span>
-          <span>no extra buttons</span>
+          <span>living tool shelf</span>
+          <span>copyable prompts</span>
+          <span>expandable modules</span>
+          <span>built to grow</span>
         </div>
       </section>
 
-      <div class="section-label">## prompts</div>
+      <div class="section-label"><span>## prompt library</span><span class="subtle">5 reusable prompts from the brain</span></div>
       <section class="prompt-list" id="prompt-list"></section>
 
+      <div class="section-label"><span>## tools / index</span><span class="subtle">space for new tools as they ship</span></div>
+      <section class="tool-grid" id="tool-grid">
+        <article class="tool-card ghost">
+          <div class="tool-top">
+            <span class="tool-id">06</span>
+            <span class="tool-chip">coming next</span>
+          </div>
+          <h2>New tools will keep landing here</h2>
+          <p>This page stays open-ended on purpose. Add future tools as separate modules so the index keeps expanding instead of becoming a dead static page.</p>
+        </article>
+        <article class="tool-card ghost">
+          <div class="tool-top">
+            <span class="tool-id">07</span>
+            <span class="tool-chip">index slot</span>
+          </div>
+          <h2>One tool per card</h2>
+          <p>Each new tool can get its own card, title, description, and copyable content, so the page reads like a growing toolkit.</p>
+        </article>
+        <article class="tool-card ghost">
+          <div class="tool-top">
+            <span class="tool-id">08</span>
+            <span class="tool-chip">ready</span>
+          </div>
+          <h2>Keep the library modular</h2>
+          <p>The point is to make it easy to add, scan, and copy without reworking the whole layout each time something new ships.</p>
+        </article>
+      </section>
+
       <div class="footer">
-        <div><strong>open tools</strong> · prompt pack only</div>
-        <div>Each prompt expands to the exact copyable text.</div>
+        <div><strong>open tools</strong> · evolving library</div>
+        <div>Prompts are one module. Tools are the bigger frame.</div>
       </div>
     </main>
   </div>
