@@ -36,8 +36,8 @@
     -webkit-font-smoothing: antialiased;
   }
   .wrap {
-    width: min(1120px, calc(100% - 32px));
-    margin: 24px auto 40px;
+    width: min(1280px, calc(100% - 24px));
+    margin: 18px auto 32px;
     border: 1px solid rgba(255,255,255,0.06);
     border-radius: 24px;
     overflow: hidden;
@@ -134,10 +134,10 @@
     list-style: none;
     cursor: pointer;
     display: grid;
-    grid-template-columns: 44px 1fr auto;
-    gap: 14px;
+    grid-template-columns: 56px 1fr auto;
+    gap: 16px;
     align-items: center;
-    padding: 16px 18px;
+    padding: 20px 22px;
   }
   summary::-webkit-details-marker { display: none; }
   .num {
@@ -282,38 +282,38 @@
     const prompts = [
       {
         id: 'prompt-1',
-        title: 'Email recap',
-        chip: 'client update',
-        note: 'Use this when you need a short, confident client update.',
-        text: `Write a crisp client update email that covers:\n- what happened\n- what it means\n- what we need from the client\n- the next step\nKeep it confident, short, and easy to forward.`
+        title: 'Senior consultant clarification flow',
+        chip: '5 questions',
+        note: 'Use before starting work when the brief is still fuzzy.',
+        text: `Act as a senior consultant.\nBefore beginning any work, ask me exactly 5 clarification questions, one at a time.\n\nEach question should meaningfully reduce ambiguity and help you fully understand the goal, constraints, audience, success criteria, and scope of this project.\n\nDo not make assumptions.\nDo not provide solutions yet.\nWait for my response after each question before asking the next.\n\nAfter the fifth answer, briefly summarize your understanding and confirm alignment before proceeding.`
       },
       {
         id: 'prompt-2',
-        title: 'Decision memo',
-        chip: 'strategy',
-        note: 'Best for turning messy notes into a clear recommendation.',
-        text: `Turn the notes below into a simple decision memo with:\n- context\n- options\n- tradeoffs\n- recommendation\n- owner and timing`
+        title: 'Elon’s 5-step systems-thinking prompt',
+        chip: 'systems',
+        note: 'Use when you need to simplify a problem and remove waste.',
+        text: `Act as a senior systems thinker.\n\nBefore doing any work, apply Elon Musk’s 5-step framework:\n\n1. Make the requirements less dumb\n2. Delete the part or process\n3. Simplify and optimize\n4. Accelerate cycle time\n5. Automate\n\nStart by asking me exactly 5 clarification questions, one at a time.\n\nEach question should help you:\n- challenge assumptions\n- identify unnecessary parts\n- simplify the problem\n- improve speed or feedback loops\n- determine what, if anything, should be automated\n\nDo not provide solutions yet.\nDo not make assumptions.\nWait for my response after each question before asking the next.\n\nAfter the fifth answer, briefly summarize your understanding and confirm alignment before proceeding.`
       },
       {
         id: 'prompt-3',
-        title: 'Meeting recap',
-        chip: 'follow-up',
-        note: 'Use after a call to make the next steps obvious.',
-        text: `Summarize this meeting for a client in this format:\n- decisions made\n- open questions\n- risks\n- owners\n- next actions\nUse plain language and no fluff.`
+        title: 'Ruthless editor prompt',
+        chip: 'rewrite',
+        note: 'Use to cut fluff and make writing sharper.',
+        text: `Act as a ruthless editor.\n\nYour job is to improve clarity, sharpness, and impact without preserving weak wording.\n\nEdit for:\n- clarity\n- brevity\n- precision\n- structure\n- persuasive force\n\nCut:\n- fluff\n- repetition\n- hedging\n- jargon\n- filler\n- weak transitions\n- vague claims\n\nKeep the meaning intact, but make the writing stronger and more direct.\n\nIf something is unclear, fix it.\nIf something is unnecessary, remove it.\nIf something can be stated more simply, simplify it.\nIf something is boring, make it more useful.\n\nReturn:\n1. the revised version\n2. a short list of the biggest changes you made.`
       },
       {
         id: 'prompt-4',
-        title: 'Prep brief',
-        chip: 'before a call',
-        note: 'Good for getting ready before an important meeting.',
-        text: `Create a short prep brief for an upcoming client call:\n- who’s in the room\n- what matters most\n- likely tension points\n- suggested questions\n- the outcome we want`
+        title: 'First principles analyst prompt',
+        chip: 'analysis',
+        note: 'Use to rebuild a problem from the ground up.',
+        text: `Act as a first-principles analyst.\n\nBreak the problem down to its most basic, irreducible truths.\nDo not rely on conventional wisdom, assumptions, or inherited frameworks unless you can justify them from first principles.\n\nStart by:\n- identifying the core objective\n- separating facts from assumptions\n- listing the constraints\n- reducing the problem to fundamentals\n- rebuilding the solution from the ground up\n\nAsk clarifying questions if needed, but do not jump to solutions too early.\n\nWhen presenting your answer:\n- state the first principles clearly\n- explain any assumptions you had to make\n- show the reasoning chain from fundamentals to conclusion\n- favor simple, direct language over jargon`
       },
       {
         id: 'prompt-5',
-        title: 'Polished rewrite',
-        chip: 'edit mode',
-        note: 'Use when the content is right but the writing needs to be cleaner.',
-        text: `Rewrite the draft below so it feels:\n- sharper\n- warmer\n- more direct\n- still human\nKeep the original meaning, just make it cleaner.`
+        title: 'Brain dump / synthesis prompt',
+        chip: 'synthesis',
+        note: 'Use when you need a raw pile of thoughts turned into structure.',
+        text: `Act as a thought organizer and strategic synthesis partner.\n\nI’m going to give you a raw brain dump with incomplete thoughts, fragments, decisions, worries, ideas, and notes.\n\nYour job is to:\n- capture everything without losing meaning\n- organize the chaos into clear themes\n- separate facts, ideas, decisions, risks, and next actions\n- identify duplicates, contradictions, and open questions\n- surface what matters most\n\nDo not over-edit or over-interpret.\nDo not force structure too early.\nFirst, absorb the input fully.\n\nThen return:\n1. a clean organized summary\n2. key themes\n3. decisions already implied\n4. open questions\n5. suggested next actions\n6. anything that seems important but buried\n\nKeep it sharp, clear, and useful.`
       },
     ];
 
