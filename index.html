@@ -4,51 +4,151 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nick's Client Share Kit</title>
-    <meta name="description" content="Quick-share tools, templates, and prompts for clients." />
+    <meta name="description" content="A clean client-facing share kit with reusable prompt modules." />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <main class="shell">
-      <section class="hero card">
-        <p class="eyebrow">Client-facing share kit</p>
-        <h1>Useful little tools I can send clients fast.</h1>
-        <p class="lede">
-          A lightweight GitHub Pages site for reusable prompts, email drafts, and simple
-          frameworks — built to be shared without a lot of explanation.
-        </p>
-        <div class="actions">
-          <a class="button primary" href="#tools">Browse tools</a>
-          <a class="button secondary" href="#contact">How to use</a>
+    <main class="frame">
+      <section class="window">
+        <header class="topbar">
+          <div class="traffic-lights" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="title-wrap">
+            <div class="filename">client-share-kit.md</div>
+            <span class="pill">share kit</span>
+          </div>
+        </header>
+
+        <div class="gutter">
+          <div class="line-numbers">
+            <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span>
+            <span>06</span><span>07</span><span>08</span><span>09</span><span>10</span>
+            <span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+            <span>16</span><span>17</span><span>18</span><span>19</span><span>20</span>
+          </div>
+          <div class="content">
+            <section class="hero">
+              <div class="eyebrow">Client-facing prompts</div>
+              <h1>Useful prompts I can hand a client without a whole explanation.</h1>
+              <p class="intro">
+                A compact, good-looking page with five clickable prompt modules first — then a few
+                bonus tools below.
+              </p>
+            </section>
+
+            <section class="module-module">
+              <div class="module-head">
+                <div class="icon">✦</div>
+                <div>
+                  <h2>5 prompts</h2>
+                  <p>Click any prompt to expand the exact text.</p>
+                </div>
+              </div>
+
+              <div class="prompt-list" id="prompt-list">
+                <details open>
+                  <summary>
+                    <span class="prompt-index">1</span>
+                    <span class="prompt-title">Email recap</span>
+                    <span class="prompt-chip">client update</span>
+                  </summary>
+                  <div class="prompt-body">
+                    <pre>Write a crisp client update email that covers:
+- what happened
+- what it means
+- what we need from the client
+- the next step
+Keep it confident, short, and easy to forward.</pre>
+                  </div>
+                </details>
+
+                <details>
+                  <summary>
+                    <span class="prompt-index">2</span>
+                    <span class="prompt-title">Decision memo</span>
+                    <span class="prompt-chip">strategy</span>
+                  </summary>
+                  <div class="prompt-body">
+                    <pre>Turn the notes below into a simple decision memo with:
+- context
+- options
+- tradeoffs
+- recommendation
+- owner and timing</pre>
+                  </div>
+                </details>
+
+                <details>
+                  <summary>
+                    <span class="prompt-index">3</span>
+                    <span class="prompt-title">Meeting recap</span>
+                    <span class="prompt-chip">follow-up</span>
+                  </summary>
+                  <div class="prompt-body">
+                    <pre>Summarize this meeting for a client in this format:
+- decisions made
+- open questions
+- risks
+- owners
+- next actions
+Use plain language and no fluff.</pre>
+                  </div>
+                </details>
+
+                <details>
+                  <summary>
+                    <span class="prompt-index">4</span>
+                    <span class="prompt-title">Prep brief</span>
+                    <span class="prompt-chip">before a call</span>
+                  </summary>
+                  <div class="prompt-body">
+                    <pre>Create a short prep brief for an upcoming client call:
+- who’s in the room
+- what matters most
+- likely tension points
+- suggested questions
+- the outcome we want</pre>
+                  </div>
+                </details>
+
+                <details>
+                  <summary>
+                    <span class="prompt-index">5</span>
+                    <span class="prompt-title">Polished rewrite</span>
+                    <span class="prompt-chip">edit mode</span>
+                  </summary>
+                  <div class="prompt-body">
+                    <pre>Rewrite the draft below so it feels:
+- sharper
+- warmer
+- more direct
+- still human
+Keep the original meaning, just make it cleaner.</pre>
+                  </div>
+                </details>
+              </div>
+            </section>
+
+            <section class="bonus-grid">
+              <article class="bonus-card">
+                <div class="card-label">bonus module</div>
+                <h3>Simple workflows</h3>
+                <p>Drop in small tools clients can use without needing a demo.</p>
+              </article>
+              <article class="bonus-card">
+                <div class="card-label">bonus module</div>
+                <h3>Shareable templates</h3>
+                <p>Make each prompt easy to copy, reuse, and forward.</p>
+              </article>
+              <article class="bonus-card">
+                <div class="card-label">bonus module</div>
+                <h3>Brandable page</h3>
+                <p>Swap in client colors, logos, or a custom homepage later.</p>
+              </article>
+            </section>
+          </div>
         </div>
-      </section>
-
-      <section id="tools" class="grid">
-        <article class="card">
-          <h2>5-prompt email draft</h2>
-          <p>Paste a few bullets and turn them into a polished client email fast.</p>
-          <pre>1. Goal
-2. Audience
-3. Tone
-4. Facts
-5. Ask</pre>
-        </article>
-        <article class="card">
-          <h2>Decision memo</h2>
-          <p>Short template for capturing context, options, and a recommended call.</p>
-          <pre>Context → Options → Tradeoffs → Recommendation</pre>
-        </article>
-        <article class="card">
-          <h2>Meeting recap</h2>
-          <p>Clean format for turning messy notes into something a client can act on.</p>
-          <pre>Decisions / Risks / Owners / Next steps</pre>
-        </article>
-      </section>
-
-      <section id="contact" class="card footer-card">
-        <h2>Want a custom version?</h2>
-        <p>
-          Send me the use case and I’ll tailor it for your team, your brand, or your workflow.
-        </p>
       </section>
     </main>
   </body>
