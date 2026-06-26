@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Open Tools — 5 Prompts</title>
+<title>Open Tools — 6 Prompts</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -139,6 +139,26 @@
     overflow: hidden;
   }
   details[open] { border-color: var(--line-strong); }
+  details.is-new {
+    border-color: rgba(34, 197, 94, 0.6);
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.5);
+  }
+  details.is-new[open] { border-color: rgba(34, 197, 94, 0.75); }
+  .new-badge {
+    display: inline-block;
+    margin-left: 8px;
+    vertical-align: middle;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #052e16;
+    background: var(--green);
+    padding: 3px 7px;
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.6);
+  }
   summary {
     list-style: none;
     cursor: pointer;
@@ -390,7 +410,7 @@
         </article>
       </section>
 
-      <div class="section-label"><span id="prompt-library">## prompt library</span><span class="subtle">5 reusable prompts from the brain</span></div>
+      <div class="section-label"><span id="prompt-library">## prompt library</span><span class="subtle">6 reusable prompts from the brain</span></div>
       <section class="prompt-list" id="prompt-list"></section>
 
       <div class="section-label"><span id="tools-index">## tools / index</span><span class="subtle">space for new tools as they ship</span></div>
@@ -467,6 +487,14 @@
         note: 'Use when you need a raw pile of thoughts turned into structure.',
         text: `Act as a thought organizer and strategic synthesis partner.\n\nI’m going to give you a raw brain dump with incomplete thoughts, fragments, decisions, worries, ideas, and notes.\n\nYour job is to:\n- capture everything without losing meaning\n- organize the chaos into clear themes\n- separate facts, ideas, decisions, risks, and next actions\n- identify duplicates, contradictions, and open questions\n- surface what matters most\n\nDo not over-edit or over-interpret.\nDo not force structure too early.\nFirst, absorb the input fully.\n\nThen return:\n1. a clean organized summary\n2. key themes\n3. decisions already implied\n4. open questions\n5. suggested next actions\n6. anything that seems important but buried\n\nKeep it sharp, clear, and useful.`
       },
+      {
+        id: 'prompt-6',
+        title: 'Automation Scout',
+        chip: 'automation',
+        note: 'Use to find the repetitive, tedious tasks an AI assistant could take off your plate.',
+        isNew: true,
+        text: `You are my automation scout. I am one person on a team. Your job is to find the repetitive tasks in my normal work week, and the parts of my job I find tedious or annoying, that an AI assistant could take off my plate.\n\nWe have a live session coming up where a team will build these automations in the room, so your final output needs to be specific enough that someone could build my top task on the spot.\n\nProcess:\n\n1. Ask me what my role is and what a normal week looks like. Wait for my answer.\n2. Ask me what the boring, tedious, or annoying parts of my job are. Wait for my answer.\n3. Walk through my work one area at a time. For each repeating task or pain point, ask one question at a time. Never ask more than one question in a message.\n4. For every task, find out: how often it happens, how long it takes, how repetitive/rule-based it is, what I start with and produce, and whether it needs to be exact or “good enough.”\n5. Give a best-guess example answer with every question so I can easily confirm or correct.\n\nWhen you have enough information, output a ranked list of my best 3–5 automation opportunities using this exact format:\n\nOpportunity #X: [Short Name]\n\n- What I do today: [plain description]\n- How often and how long:\n- Repetitive and rule-based: High / Medium / Low\n- What we could build:\n  - Tier 1: a prompt I paste in when I need it\n  - Tier 2: a reusable assistant that runs the same way every time\n  - Tier 3: a full automation that runs in the background\n- Starter prompt to build it live: [concrete prompt or setup]\n\nRules:\n- One question at a time.\n- Use plain language.\n- Focus on tasks that are actually annoying or draining.\n- Be specific — avoid vague answers like “email”.\n\nStart the interview now with your first question.`
+      },
     ];
 
     const list = document.getElementById('prompt-list');
@@ -491,11 +519,11 @@
 
     function render() {
       list.innerHTML = prompts.map((p, index) => `
-        <details id="${p.id}" ${index === 0 ? 'open' : ''}>
+        <details id="${p.id}" class="${p.isNew ? 'is-new' : ''}" ${index === 0 ? 'open' : ''}>
           <summary>
             <span class="num">${String(index + 1).padStart(2, '0')}</span>
             <span>
-              <div class="prompt-name">${p.title}</div>
+              <div class="prompt-name">${p.title}${p.isNew ? ' <span class="new-badge">NEW</span>' : ''}</div>
               <div class="prompt-note">${p.note}</div>
             </span>
             <span class="chip">${p.chip}</span>
