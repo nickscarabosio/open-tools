@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nick Scarabosio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070912; --panel: #0d1220; --panel-2: #11182a;
+      --line: rgba(163, 146, 255, 0.16); --line-strong: rgba(163, 146, 255, 0.28);
+      --text: #eef0ff; --muted: #9ea6c5; --soft: #6d7591;
+      --purple: #9d6cff; --purple-soft: rgba(157, 108, 255, 0.12);
+      --green: #7ef0b4; --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: 'Inter', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      background: radial-gradient(circle at 50% 0%, rgba(157, 108, 255, 0.18), transparent 32%),
+                  radial-gradient(circle at 85% 18%, rgba(126, 240, 180, 0.05), transparent 24%),
+                  var(--bg);
+      color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased;
+      display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px;
+    }
+    .wrap {
+      width: min(680px, 100%);
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; overflow: hidden;
+      background: linear-gradient(180deg, rgba(17, 23, 39, 0.98), rgba(10, 13, 24, 0.98));
+      box-shadow: var(--shadow);
+    }
+    .topbar {
+      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+      border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02);
+    }
+    .lights { display: flex; gap: 8px; }
+    .lights i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .lights i:nth-child(1) { background: #ff5f57; }
+    .lights i:nth-child(2) { background: #febc2e; }
+    .lights i:nth-child(3) { background: #28c840; }
+    .title { margin: 0 auto; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+    .content { padding: 48px 40px 44px; text-align: center; }
+    h1 { margin: 0 0 12px; font-size: clamp(2.8rem, 7vw, 4.2rem); line-height: .95; letter-spacing: -0.05em; }
+    .subtitle { margin: 0 0 32px; color: var(--muted); font-size: 1.1rem; line-height: 1.6; max-width: 420px; margin-left: auto; margin-right: auto; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .btn {
+      appearance: none; border: 1px solid var(--line); background: transparent; color: var(--text);
+      border-radius: 12px; padding: 14px 28px; font: inherit; font-size: 15px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s ease;
+    }
+    .btn:hover { border-color: var(--line-strong); background: rgba(157,108,255,0.08); }
+    .primary { border-color: rgba(157,108,255,0.35); background: var(--purple-soft); font-weight: 600; }
+    .primary:hover { background: rgba(157,108,255,0.2); }
+    .footer { margin-top: 40px; font-family: var(--mono); font-size: 12px; color: var(--soft); }
+    @media (max-width: 600px) { .content { padding: 36px 24px 32px; } h1 { font-size: 2.4rem; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="title">nickscarabosio</div>
+    </div>
+
+    <div class="content">
+      <h1>Nick Scarabosio</h1>
+      <p class="subtitle">Coach &amp; consultant helping midsize organizations scale with clarity and AI.</p>
+
+      <div class="actions">
+        <a href="open-tools/" class="btn primary">Open Tools</a>
+        <a href="ai-maturity.html" class="btn">AI Maturity Model</a>
+      </div>
+
+      <div class="footer">
+        evolving toolkit · prompts &amp; systems
+      </div>
+    </div>
+  </div>
+</body>
+</html>
