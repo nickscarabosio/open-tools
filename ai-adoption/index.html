@@ -4,17 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SMB AI Adoption Guide • Nick Scarabosio</title>
-  <meta name="description" content="Installing AI in your business without the mess. A phased adoption guide and checklist for SMBs." />
+  <meta name="description" content="Install AI without the mess. Phased adoption guide for SMBs — access, data, cost, rules." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #070912; --panel: #0d1220; --panel-2: #11182a;
-      --line: rgba(163, 146, 255, 0.16); --line-strong: rgba(163, 146, 255, 0.28);
-      --text: #eef0ff; --muted: #9ea6c5; --soft: #6d7591;
-      --purple: #9d6cff; --purple-soft: rgba(157, 108, 255, 0.12);
-      --green: #7ef0b4; --green-soft: rgba(126, 240, 180, 0.12);
+      --bg: #070912;
+      --panel: #0d1220;
+      --line: rgba(163, 146, 255, 0.16);
+      --line-strong: rgba(163, 146, 255, 0.35);
+      --text: #f2f3ff;
+      --body: #d8dcf0;
+      --muted: #9ea6c5;
+      --soft: #6d7591;
+      --purple: #9d6cff;
+      --purple-solid: #8b5cf6;
+      --purple-soft: rgba(157, 108, 255, 0.14);
+      --green: #7ef0b4;
+      --green-soft: rgba(126, 240, 180, 0.12);
       --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
       --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
       --sans: 'Inter', system-ui, sans-serif;
@@ -25,214 +33,229 @@
     html, body { margin: 0; min-height: 100%; }
     body {
       background:
-        radial-gradient(circle at 50% 0%, rgba(157, 108, 255, 0.18), transparent 32%),
-        radial-gradient(circle at 85% 18%, rgba(126, 240, 180, 0.05), transparent 24%),
+        radial-gradient(circle at 50% 0%, rgba(157, 108, 255, 0.2), transparent 34%),
+        radial-gradient(circle at 88% 12%, rgba(126, 240, 180, 0.06), transparent 22%),
         var(--bg);
       color: var(--text);
       font-family: var(--sans);
+      font-size: 17px;
       -webkit-font-smoothing: antialiased;
     }
     a { color: #c9b8ff; }
     .wrap {
-      width: min(920px, calc(100% - 20px));
+      width: min(820px, calc(100% - 20px));
       margin: 16px auto 40px;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.07);
       border-radius: 24px;
       overflow: hidden;
       background: linear-gradient(180deg, rgba(17, 23, 39, 0.98), rgba(10, 13, 24, 0.98));
       box-shadow: var(--shadow);
     }
     .topbar {
-      display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
       border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02);
       flex-wrap: wrap;
     }
-    .lights { display: flex; gap: 8px; flex-shrink: 0; }
-    .lights i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .lights { display: flex; gap: 7px; flex-shrink: 0; }
+    .lights i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .lights i:nth-child(1) { background: #ff5f57; }
     .lights i:nth-child(2) { background: #febc2e; }
     .lights i:nth-child(3) { background: #28c840; }
     .title {
-      font-family: var(--mono); font-size: 13px; color: var(--muted);
-      display: flex; align-items: center; gap: 10px; margin-right: auto;
+      font-family: var(--mono); font-size: 12px; color: var(--muted);
+      display: flex; align-items: center; gap: 8px; margin-right: auto;
     }
     .badge {
       padding: 4px 9px; border-radius: 999px;
-      border: 1px solid rgba(157,108,255,0.22); background: var(--purple-soft);
-      color: #d9ccff; text-transform: uppercase; font-size: 10px; letter-spacing: .12em;
+      border: 1px solid rgba(157,108,255,0.3); background: var(--purple-soft);
+      color: #e4dbff; text-transform: uppercase; font-size: 10px; letter-spacing: .1em;
     }
-    .nav {
-      display: flex; gap: 6px; flex-wrap: wrap;
-    }
+    .nav { display: flex; gap: 4px; flex-wrap: wrap; }
     .nav a {
       font-family: var(--mono); font-size: 11px; color: var(--soft);
-      text-decoration: none; padding: 6px 10px; border-radius: 999px;
-      border: 1px solid transparent;
+      text-decoration: none; padding: 8px 11px; border-radius: 999px;
+      border: 1px solid transparent; min-height: 36px; display: inline-flex; align-items: center;
     }
     .nav a:hover, .nav a.active {
-      color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.03);
+      color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.04);
     }
-    .progress-bar {
-      height: 3px; background: rgba(255,255,255,0.04);
-    }
+    .progress-bar { height: 3px; background: rgba(255,255,255,0.05); }
     .progress-bar > span {
       display: block; height: 100%; width: 0%;
-      background: linear-gradient(90deg, var(--purple), var(--green));
+      background: linear-gradient(90deg, var(--purple-solid), var(--green));
       transition: width .35s ease;
     }
-    .content { padding: 34px 28px 36px; }
+    .step-meta {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 14px 22px 0; font-family: var(--mono); font-size: 12px; color: var(--soft);
+    }
+    .step-meta strong { color: var(--green); font-weight: 500; }
+    .step-rail {
+      display: flex; gap: 6px; flex-wrap: wrap; margin: 12px 22px 0;
+    }
+    .step-pill {
+      appearance: none; border: 1px solid var(--line); background: rgba(255,255,255,0.02);
+      color: var(--soft); border-radius: 999px; padding: 8px 12px;
+      font-family: var(--mono); font-size: 11px; cursor: pointer; min-height: 36px;
+    }
+    .step-pill:hover { color: var(--text); border-color: var(--line-strong); }
+    .step-pill.active {
+      color: #fff; border-color: rgba(139,92,246,0.55); background: var(--purple-solid);
+    }
+    .step-pill.done { color: var(--green); border-color: rgba(126,240,180,0.3); }
+    .step-pill.locked { opacity: .4; cursor: not-allowed; }
+    .content { padding: 28px 22px 36px; }
     .eyebrow {
       font-family: var(--mono); color: var(--green); text-transform: uppercase;
-      letter-spacing: .16em; font-size: 11px; margin-bottom: 12px;
+      letter-spacing: .14em; font-size: 11px; margin-bottom: 12px;
     }
     h1 {
-      margin: 0 0 14px; font-size: clamp(2.2rem, 5vw, 3.4rem);
-      line-height: .98; letter-spacing: -0.04em;
+      margin: 0 0 14px; font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+      line-height: 1.05; letter-spacing: -0.035em;
     }
-    h2 { margin: 0 0 10px; font-size: 1.35rem; letter-spacing: -0.02em; }
-    h3 { margin: 0 0 8px; font-size: 1.05rem; }
-    .lede { margin: 0 0 18px; max-width: 720px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
-    p { color: var(--muted); line-height: 1.7; margin: 0 0 14px; }
-    .highlight { color: var(--text); }
+    h2 { margin: 0 0 8px; font-size: 1.2rem; letter-spacing: -0.02em; }
+    .lede {
+      margin: 0 0 20px; max-width: 36rem; color: var(--body);
+      font-size: 1.08rem; line-height: 1.65;
+    }
+    p { color: var(--body); line-height: 1.65; margin: 0 0 12px; }
+    .highlight { color: var(--text); font-weight: 500; }
+    .punch {
+      margin: 0 0 18px; color: var(--text); font-size: 1.12rem; line-height: 1.45; font-weight: 500;
+    }
+    .damage {
+      list-style: none; margin: 0 0 24px; padding: 0;
+      display: grid; gap: 8px;
+    }
+    .damage li {
+      color: var(--body); padding: 10px 14px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);
+      line-height: 1.45;
+    }
+    .damage li::before {
+      content: "→ "; color: var(--green); font-family: var(--mono); font-size: 12px;
+    }
     .meta {
-      display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 24px;
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px;
       font-family: var(--mono); font-size: 12px; color: var(--soft);
     }
     .meta span {
       padding: 6px 10px; border-radius: 999px;
       border: 1px solid var(--line); background: rgba(255,255,255,0.02);
     }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
     .btn {
       appearance: none; border: 1px solid var(--line); background: transparent;
-      color: var(--text); border-radius: 12px; padding: 12px 20px;
-      font: inherit; font-size: 14px; cursor: pointer; text-decoration: none;
+      color: var(--text); border-radius: 12px; padding: 13px 20px;
+      font: inherit; font-size: 15px; font-weight: 500; cursor: pointer; text-decoration: none;
       display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      transition: all 0.2s ease;
+      transition: all 0.15s ease; min-height: 46px;
     }
-    .btn:hover { border-color: var(--line-strong); background: rgba(157,108,255,0.08); }
+    .btn:hover { border-color: var(--line-strong); background: rgba(157,108,255,0.1); }
     .btn:disabled { opacity: .5; cursor: not-allowed; }
     .btn.primary {
-      border-color: rgba(157,108,255,0.35); background: var(--purple-soft); font-weight: 600;
+      border-color: transparent; background: var(--purple-solid); color: #fff; font-weight: 600;
     }
-    .btn.primary:hover { background: rgba(157,108,255,0.2); }
+    .btn.primary:hover { background: #9b6dff; filter: brightness(1.05); }
     .btn.ghost { color: var(--muted); }
-    .step-rail {
-      display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 28px;
-    }
-    .step-pill {
-      appearance: none; border: 1px solid var(--line); background: rgba(255,255,255,0.02);
-      color: var(--soft); border-radius: 999px; padding: 7px 11px;
-      font-family: var(--mono); font-size: 11px; cursor: pointer;
-    }
-    .step-pill:hover { color: var(--text); border-color: var(--line-strong); }
-    .step-pill.active {
-      color: #d9ccff; border-color: rgba(157,108,255,0.4); background: var(--purple-soft);
-    }
-    .step-pill.done { color: var(--green); border-color: rgba(126,240,180,0.28); }
-    .step-pill.locked { opacity: .45; cursor: not-allowed; }
     .card-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;
-      margin: 18px 0 8px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px;
+      margin: 8px 0 8px;
     }
     .fail-card, .info-card {
-      border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
-      background: rgba(255,255,255,0.025); padding: 16px;
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 14px;
+      background: rgba(255,255,255,0.025); padding: 14px;
       text-align: left; cursor: pointer; color: inherit; font: inherit;
-      transition: border-color .2s ease, background .2s ease;
+      transition: border-color .15s ease, background .15s ease, transform .15s ease;
     }
     .fail-card:hover, .info-card:hover {
-      border-color: var(--line-strong); background: rgba(157,108,255,0.06);
+      border-color: var(--line-strong); background: rgba(157,108,255,0.08); transform: translateY(-1px);
     }
-    .fail-card .label, .info-card .label {
-      font-family: var(--mono); font-size: 11px; color: var(--green);
-      text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px;
-    }
-    .fail-card strong, .info-card strong { display: block; color: var(--text); margin-bottom: 6px; }
-    .fail-card p, .info-card p { margin: 0; font-size: .92rem; }
+    .fail-card strong, .info-card strong { display: block; color: var(--text); margin-bottom: 4px; font-size: .98rem; }
+    .fail-card p, .info-card p { margin: 0; font-size: .88rem; color: var(--muted); line-height: 1.4; }
     .rule {
-      border: 1px solid rgba(126,240,180,0.22); background: var(--green-soft);
-      border-radius: 16px; padding: 16px 18px; margin: 18px 0 20px;
+      border: 1px solid rgba(126,240,180,0.28); background: var(--green-soft);
+      border-radius: 16px; padding: 16px 18px; margin: 0 0 22px;
     }
     .rule .k {
       font-family: var(--mono); font-size: 11px; color: var(--green);
-      text-transform: uppercase; letter-spacing: .14em; margin-bottom: 8px;
+      text-transform: uppercase; letter-spacing: .12em; margin-bottom: 8px;
     }
-    .rule p { margin: 0; color: var(--text); font-weight: 500; }
-    .checklist { display: grid; gap: 10px; margin: 8px 0 18px; }
+    .rule p { margin: 0; color: var(--text); font-weight: 600; font-size: 1.05rem; line-height: 1.4; }
+    .checklist { display: grid; gap: 8px; margin: 0 0 8px; }
     .check-item {
       display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start;
-      border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
-      background: rgba(255,255,255,0.02); padding: 14px 14px;
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 12px;
+      background: rgba(255,255,255,0.02); padding: 13px 14px;
       cursor: pointer; transition: border-color .15s ease;
     }
     .check-item:hover { border-color: var(--line-strong); }
-    .check-item.checked { border-color: rgba(126,240,180,0.28); background: rgba(126,240,180,0.05); }
+    .check-item.checked { border-color: rgba(126,240,180,0.32); background: rgba(126,240,180,0.06); }
     .check-item input { margin-top: 3px; accent-color: var(--green); width: 16px; height: 16px; }
-    .check-item span { color: var(--muted); line-height: 1.55; font-size: .98rem; }
+    .check-item span { color: var(--body); line-height: 1.5; font-size: .98rem; }
     .check-item.checked span { color: var(--text); }
     .section-label {
-      margin: 28px 0 14px; font-family: var(--mono); font-size: 11px; color: var(--soft);
-      text-transform: uppercase; letter-spacing: .16em;
+      margin: 28px 0 12px; font-family: var(--mono); font-size: 11px; color: var(--soft);
+      text-transform: uppercase; letter-spacing: .12em;
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .section-label .subtle { color: var(--muted); text-transform: none; letter-spacing: 0; font-size: 12px; }
+    .context { margin: 0 0 20px; color: var(--muted); font-size: .98rem; max-width: 36rem; }
     .gate-box {
-      border: 1px solid rgba(157,108,255,0.28); background: rgba(157,108,255,0.08);
-      border-radius: 18px; padding: 22px; margin: 18px 0;
+      border: 1px solid rgba(157,108,255,0.32); background: rgba(157,108,255,0.1);
+      border-radius: 18px; padding: 22px; margin: 8px 0 12px;
     }
-    .gate-box h2 { margin-bottom: 8px; }
-    .form-grid { display: grid; gap: 12px; margin-top: 16px; max-width: 420px; }
-    label { display: grid; gap: 6px; font-family: var(--mono); font-size: 11px; color: var(--soft); text-transform: uppercase; letter-spacing: .1em; }
+    .form-grid { display: grid; gap: 12px; margin-top: 14px; max-width: 400px; }
+    label {
+      display: grid; gap: 6px; font-family: var(--mono); font-size: 11px;
+      color: var(--soft); text-transform: uppercase; letter-spacing: .08em;
+    }
     input[type="text"], input[type="email"] {
       appearance: none; width: 100%; border-radius: 12px; border: 1px solid var(--line);
-      background: rgba(0,0,0,0.25); color: var(--text); padding: 12px 14px;
-      font: inherit; font-size: 15px;
+      background: rgba(0,0,0,0.28); color: var(--text); padding: 12px 14px;
+      font: inherit; font-size: 16px;
     }
-    input:focus { outline: none; border-color: rgba(157,108,255,0.5); }
+    input:focus { outline: none; border-color: rgba(157,108,255,0.55); }
     .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; overflow: hidden; }
-    .form-note { font-size: .88rem; color: var(--soft); margin: 10px 0 0; max-width: 420px; }
-    .form-error { color: var(--danger); font-size: .9rem; margin-top: 10px; min-height: 1.2em; }
+    .form-note { font-size: .85rem; color: var(--soft); margin: 8px 0 0; }
+    .form-error { color: var(--danger); font-size: .9rem; margin-top: 8px; min-height: 1.2em; }
     .locked-panel {
-      border: 1px dashed rgba(163,146,255,0.28); border-radius: 18px;
-      padding: 28px 22px; text-align: center; background: rgba(255,255,255,0.02);
-      margin: 12px 0 8px;
+      border: 1px dashed rgba(163,146,255,0.3); border-radius: 16px;
+      padding: 28px 20px; text-align: center; background: rgba(255,255,255,0.02); margin: 8px 0;
     }
-    .locked-panel p { max-width: 460px; margin: 0 auto 16px; }
-    table {
-      width: 100%; border-collapse: collapse; font-size: .92rem; margin: 12px 0 18px;
-    }
+    .locked-panel p { max-width: 420px; margin: 0 auto 16px; color: var(--body); }
+    table { width: 100%; border-collapse: collapse; font-size: .92rem; margin: 0; }
     th, td {
-      text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
-      color: var(--muted); vertical-align: top;
+      text-align: left; padding: 11px 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--body); vertical-align: top;
     }
-    th { color: var(--soft); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; }
-    td:first-child, th:first-child { color: var(--text); }
-    .table-wrap { overflow-x: auto; border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; }
-    .job-box {
-      display: grid; gap: 8px; margin: 8px 0 18px;
+    th {
+      color: var(--soft); font-family: var(--mono); font-size: 11px;
+      letter-spacing: .06em; text-transform: uppercase; font-weight: 500;
     }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    td:first-child { color: var(--text); font-weight: 500; }
+    .table-wrap {
+      overflow-x: auto; border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; margin: 0 0 18px;
+    }
+    .job-box { display: grid; gap: 8px; margin: 0 0 18px; }
     .job-box textarea {
-      width: 100%; min-height: 88px; border-radius: 12px; border: 1px solid var(--line);
-      background: rgba(0,0,0,0.25); color: var(--text); padding: 12px 14px;
-      font: inherit; font-size: 15px; resize: vertical;
+      width: 100%; min-height: 72px; border-radius: 12px; border: 1px solid var(--line);
+      background: rgba(0,0,0,0.28); color: var(--text); padding: 12px 14px;
+      font: inherit; font-size: 16px; resize: vertical;
     }
-    .job-box textarea:focus { outline: none; border-color: rgba(157,108,255,0.5); }
+    .job-box textarea:focus { outline: none; border-color: rgba(157,108,255,0.55); }
     .status-row {
       display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
-      justify-content: space-between; margin: 8px 0 18px;
+      justify-content: space-between; margin: 0 0 16px;
       font-family: var(--mono); font-size: 12px; color: var(--soft);
-    }
-    .pill-ok {
-      color: var(--green); border: 1px solid rgba(126,240,180,0.28);
-      background: var(--green-soft); border-radius: 999px; padding: 5px 10px;
     }
     .footer {
-      margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line);
-      font-family: var(--mono); font-size: 12px; color: var(--soft);
-      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line);
+      font-family: var(--mono); font-size: 11px; color: var(--soft);
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
     }
-    .hidden { display: none !important; }
     .toast {
       position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
       background: #151b2e; border: 1px solid var(--line-strong); color: var(--text);
@@ -241,32 +264,39 @@
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .config-banner {
+      display: none;
       background: rgba(255, 188, 46, 0.1); border-bottom: 1px solid rgba(255, 188, 46, 0.28);
-      color: #f0d48a; font-family: var(--mono); font-size: 12px; padding: 10px 18px;
+      color: #f0d48a; font-family: var(--mono); font-size: 11px; padding: 8px 16px;
+    }
+    .config-banner.show { display: block; }
+    .map-line {
+      font-family: var(--mono); font-size: 12px; color: var(--soft);
+      margin: 0 0 24px; letter-spacing: 0.02em;
     }
     @media (max-width: 700px) {
-      .content { padding: 24px 16px 28px; }
-      .title span:first-child { display: none; }
-      h1 { font-size: 2rem; }
-      .check-item { padding: 12px; }
+      .content { padding: 22px 16px 28px; }
+      .step-meta, .step-rail { padding-left: 16px; padding-right: 16px; margin-left: 16px; margin-right: 16px; }
+      .step-rail { margin-left: 16px; margin-right: 16px; }
+      .title .page-name { display: none; }
+      h1 { font-size: 1.75rem; }
     }
     @media print {
       body { background: white; color: black; }
-      .topbar, .progress-bar, .step-rail, .actions, .nav, .gate-box, .config-banner { display: none !important; }
+      .topbar, .progress-bar, .step-rail, .step-meta, .actions, .nav, .gate-box, .config-banner { display: none !important; }
       .wrap { box-shadow: none; border: none; width: 100%; margin: 0; }
-      .check-item, p, td, th { color: black !important; }
+      .check-item, p, td, th, .lede { color: black !important; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <div id="config-banner" class="config-banner hidden">
-      Lead form is not connected yet. Finish the Google Sheet setup in SETUP.md, then paste the web app URL into LEADS_ENDPOINT.
+    <div id="config-banner" class="config-banner" role="status">
+      Lead form not connected — set LEADS_ENDPOINT after Google Sheet setup (SETUP.md).
     </div>
     <div class="topbar">
       <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="title">
-        <span>ai-adoption.md</span>
+        <span class="page-name">AI Adoption</span>
         <span class="badge" id="access-badge">free start</span>
       </div>
       <nav class="nav" aria-label="Site">
@@ -277,13 +307,16 @@
       </nav>
     </div>
     <div class="progress-bar" aria-hidden="true"><span id="progress-fill"></span></div>
+    <div class="step-meta">
+      <span id="step-label"><strong>Start</strong></span>
+      <span id="step-count">1 / 10</span>
+    </div>
+    <div class="step-rail" id="step-rail" aria-label="Chapters"></div>
 
     <main class="content">
-      <div class="step-rail" id="step-rail" aria-label="Guide steps"></div>
       <div id="view"></div>
-
       <div class="footer">
-        <span>Culture to Cash · SMB AI Adoption Guide</span>
+        <span>Culture to Cash · AI Adoption</span>
         <span>Learning is valuable. Movement is mandatory.</span>
       </div>
     </main>
@@ -291,19 +324,16 @@
   <div class="toast" id="toast" role="status"></div>
 
   <script>
-    // ─────────────────────────────────────────────────────────────
-    // PASTE your Google Apps Script web app URL here after setup.
-    // See SETUP.md in this folder.
-    // ─────────────────────────────────────────────────────────────
+    // Paste Google Apps Script web app URL after SETUP.md
     const LEADS_ENDPOINT = '';
     const STORAGE_KEY = 'ai-adoption-v1';
 
     const FAILURES = [
-      { id: 'sprawl', title: 'Tool sprawl', cost: 'Duplicate spend, no owner, no standard', phase: 'phase-0', looks: 'Overlapping subscriptions bought on impulse' },
-      { id: 'perms', title: 'Permission sprawl', cost: 'Broad access to email, files, and accounts', phase: 'phase-2', looks: 'Clicking Allow on every scope and connector' },
-      { id: 'data', title: 'Data leakage', cost: 'Loss of control over where data lives', phase: 'phase-3', looks: 'Pasting confidential data into any tool' },
-      { id: 'cost', title: 'Cost leakage', cost: 'A bill that climbs with no gain in quality', phase: 'phase-4', looks: 'Premium models and API keys for routine work' },
-      { id: 'shadow', title: 'Shadow AI', cost: 'Company data outside any account you control', phase: 'phase-5', looks: 'Staff using personal or unapproved accounts' },
+      { title: 'Tool sprawl', cost: 'Pay twice, own nothing', phase: 'decide' },
+      { title: 'Permission sprawl', cost: 'Allow on everything', phase: 'access' },
+      { title: 'Data leakage', cost: 'Paste first, regret later', phase: 'data' },
+      { title: 'Cost leakage', cost: 'Biggest model by reflex', phase: 'cost' },
+      { title: 'Shadow AI', cost: 'Company data, personal logins', phase: 'rules' },
     ];
 
     const PHASES = [
@@ -311,23 +341,23 @@
         id: 'intro',
         label: 'Start',
         free: true,
-        title: 'Installing AI in Your Business',
-        eyebrow: 'adoption guide · SMB checklist',
+        title: 'Installing AI without the mess',
+        eyebrow: 'SMB adoption playbook',
       },
       {
-        id: 'phase-0',
-        label: 'P0',
+        id: 'decide',
+        label: 'Decide',
         free: true,
-        num: 'Phase 0',
-        title: 'Decide Before You Buy',
+        num: 'Chapter 1',
+        title: 'Decide before you buy',
         eyebrow: 'prevent tool sprawl',
-        rule: 'Name the job before you name the tool. If you cannot state the task in one sentence, you are not ready to buy.',
-        body: 'The first click is a subscription. Slow it down. Tool sprawl is cheaper to prevent than to unwind.',
+        rule: 'Job first. Tool second. Can\'t say the job in one sentence? Don\'t buy.',
+        context: 'First click = subscription. Slow down.',
         checks: [
-          { id: 'p0-job', text: 'Write the specific job to be done in one sentence (e.g. draft first-pass client emails or summarize support tickets).' },
-          { id: 'p0-platform', text: 'Pick one primary platform to standardize on rather than three that overlap.' },
-          { id: 'p0-owner', text: 'Name a single owner accountable for the account, billing, and access. One person, not a committee.' },
-          { id: 'p0-budget', text: 'Set a starting budget and a date to review whether the tool earned its keep.' },
+          { id: 'p0-job', text: 'Write the job in one sentence.' },
+          { id: 'p0-platform', text: 'Pick one primary platform.' },
+          { id: 'p0-owner', text: 'Name one owner (billing + access).' },
+          { id: 'p0-budget', text: 'Set budget + review date.' },
         ],
       },
       {
@@ -335,180 +365,159 @@
         label: 'Unlock',
         free: true,
         title: 'Unlock the full playbook',
-        eyebrow: 'free · no spam',
+        eyebrow: 'free access',
       },
       {
-        id: 'phase-1',
-        label: 'P1',
+        id: 'account',
+        label: 'Account',
         free: false,
-        num: 'Phase 1',
-        title: 'Set Up the Account',
+        num: 'Chapter 2',
+        title: 'Set up the account',
         eyebrow: 'seats · billing · auth',
-        rule: 'Subscription seats cover human work. API keys are for automation only. Never let a person\'s daily work run on a per-token key.',
-        body: 'This is where paying twice begins, usually invisibly. Get the plan and the login right before anyone starts working.',
+        rule: 'Seats for people. API keys for automation. Never mix.',
+        context: 'Paying twice starts here — usually invisible.',
         checks: [
-          { id: 'p1-plan', text: 'Confirm the plan type and what it includes. On usage-based plans the seat fee is access only and every token bills at metered rates.' },
-          { id: 'p1-seats', text: 'Assign seats to actual users. Remove inactive or duplicate seats before they renew.' },
-          { id: 'p1-limit', text: 'Set an organization-wide monthly spend limit. Do not leave it on Unlimited.' },
-          { id: 'p1-login', text: 'Confirm each user is logged in on their subscription seat, not an API key. In Claude Code, run /status to verify.' },
-          { id: 'p1-keys', text: 'Search environments, shell profiles, and CI configs for stray API keys that silently route billing to metered rates.' },
-          { id: 'p1-split', text: 'Produce one view of monthly spend split three ways: seats, overage or usage credits, and API.' },
+          { id: 'p1-plan', text: 'Confirm plan + what\'s included.' },
+          { id: 'p1-seats', text: 'Assign seats. Kill inactive ones.' },
+          { id: 'p1-limit', text: 'Set a monthly spend cap.' },
+          { id: 'p1-login', text: 'Users on seats, not API keys.' },
+          { id: 'p1-keys', text: 'Hunt stray API keys (env, CI, shells).' },
+          { id: 'p1-split', text: 'One spend view: seats / overage / API.' },
         ],
       },
       {
-        id: 'phase-2',
-        label: 'P2',
+        id: 'access',
+        label: 'Access',
         free: false,
-        num: 'Phase 2',
-        title: 'Control Access and Permissions',
-        eyebrow: 'least privilege · connectors',
-        rule: 'Before you click Allow, read what is being granted. If a tool asks for more access than the job requires, say no and move on.',
-        body: 'This is the center of the click-happy problem. Modern AI tools ask to connect to your email, calendar, files, and chat. Each connection is a standing grant that lives on until someone revokes it.',
+        num: 'Chapter 3',
+        title: 'Control access',
+        eyebrow: 'least privilege',
+        rule: 'Read Allow. Can\'t explain it? Decline.',
+        context: 'Every Allow is a door left open.',
         checks: [
-          { id: 'p2-narrow', text: 'Grant the narrowest access that does the job. Read-only over read-write, one folder over the whole drive, one mailbox over the whole domain.' },
-          { id: 'p2-decline', text: 'Decline any permission you cannot explain out loud. A meeting-notes tool does not need send-email access.' },
-          { id: 'p2-admin', text: 'Keep admin rights to one or two people. Everyone else gets standard access.' },
-          { id: 'p2-list', text: 'Keep a written list of every integration connected to your AI tools and what each one can reach.' },
-          { id: 'p2-quarterly', text: 'Review the list quarterly and disconnect anything unused. Every connector is a door left open.' },
-          { id: 'p2-approve', text: 'Require the account owner to approve new connectors. Do not let any user wire the company\'s email into a new tool unsupervised.' },
-          { id: 'p2-sso', text: 'Turn on single sign-on and require it, so access is tied to company identity and dies when someone leaves.' },
-          { id: 'p2-mfa', text: 'Enforce multi-factor authentication on the admin and billing accounts at minimum.' },
+          { id: 'p2-narrow', text: 'Narrowest access that works.' },
+          { id: 'p2-decline', text: 'Decline what you can\'t explain.' },
+          { id: 'p2-admin', text: 'Admins: 1–2 people max.' },
+          { id: 'p2-list', text: 'List every connector + reach.' },
+          { id: 'p2-quarterly', text: 'Quarterly: kill unused connectors.' },
+          { id: 'p2-approve', text: 'New connectors need owner OK.' },
+          { id: 'p2-sso', text: 'SSO required.' },
+          { id: 'p2-mfa', text: 'MFA on admin + billing.' },
         ],
       },
       {
-        id: 'phase-3',
-        label: 'P3',
+        id: 'data',
+        label: 'Data',
         free: false,
-        num: 'Phase 3',
-        title: 'Protect Your Data',
-        eyebrow: 'retention · training · DPA',
-        rule: 'If you would not email it to a stranger, do not paste it into a tool you have not vetted for data handling.',
-        body: 'Once staff are productive, the reflex is to paste anything into the tool. Decide in advance what is allowed in and what is never allowed in.',
+        num: 'Chapter 4',
+        title: 'Protect your data',
+        eyebrow: 'retention · training',
+        rule: 'Wouldn\'t email a stranger? Don\'t paste it.',
+        context: 'Paste reflex comes free. Rules don\'t.',
         checks: [
-          { id: 'p3-allowed', text: 'Define what data is allowed: general work is fine, and name the categories that are never pasted in (customer financials, health data, passwords, anything under contract).' },
-          { id: 'p3-train', text: 'Check the tool\'s data retention and training settings. Confirm whether your inputs train the vendor\'s models and turn that off if the option exists.' },
-          { id: 'p3-dpa', text: 'For anything regulated or confidential, get a data processing agreement in place before real data goes in.' },
-          { id: 'p3-tier', text: 'Prefer business or enterprise tiers, which typically carry stronger data commitments than consumer plans.' },
+          { id: 'p3-allowed', text: 'Define allowed vs never-paste data.' },
+          { id: 'p3-train', text: 'Turn off model training if you can.' },
+          { id: 'p3-dpa', text: 'DPA before regulated data.' },
+          { id: 'p3-tier', text: 'Business tier when data matters.' },
         ],
       },
       {
-        id: 'phase-4',
-        label: 'P4',
+        id: 'cost',
+        label: 'Cost',
         free: false,
-        num: 'Phase 4',
-        title: 'Control Cost and Pick the Right Model',
+        num: 'Chapter 5',
+        title: 'Control cost & models',
         eyebrow: 'default cheap · escalate on purpose',
-        rule: 'Make the affordable model the default. Escalating to a premium model should be a deliberate act with a reason.',
-        body: 'The spread between the cheapest and most expensive model is roughly ten times per unit of work. Teams reach for the biggest model by reflex and pay a premium on work a cheaper model does just as well.',
+        rule: 'Cheap default. Premium is a decision.',
+        context: 'Cheapest → premium is ~10×. Default cheap.',
         checks: [
-          { id: 'p4-default', text: 'Affordable model set as the visible default.' },
-          { id: 'p4-card', text: 'Routing card published so the team knows which model to use for what.' },
-          { id: 'p4-escalate', text: 'Escalation to premium models treated as deliberate, with a reason.' },
+          { id: 'p4-default', text: 'Affordable model is the default.' },
+          { id: 'p4-card', text: 'Publish the model routing card.' },
+          { id: 'p4-escalate', text: 'Premium only with a reason.' },
         ],
         showCostLadder: true,
       },
       {
-        id: 'phase-5',
-        label: 'P5',
+        id: 'rules',
+        label: 'Rules',
         free: false,
-        num: 'Phase 5',
-        title: 'Set the Rules and Train People',
+        num: 'Chapter 6',
+        title: 'Set the rules',
         eyebrow: 'one page · 30 minutes',
-        rule: 'Publish one page everyone reads: what is approved, what data is off limits, and which model to use for what.',
-        body: 'Tools do not create the mess. People clicking without a standard do. A one-page policy and a short training beat a long document nobody reads.',
+        rule: 'One page: tools, data, routing.',
+        context: 'Tools don\'t make the mess. Clicks without a standard do.',
         checks: [
-          { id: 'p5-policy', text: 'Write a one-page acceptable use policy covering approved tools, data rules, and who to ask before connecting anything new.' },
-          { id: 'p5-routing', text: 'Publish the model routing card so the affordable model is the visible default.' },
-          { id: 'p5-train', text: 'Run a 30-minute training on the two habits that matter most: read before you click Allow, and route by judgment versus execution.' },
-          { id: 'p5-path', text: 'Give people a fast path to request a new tool, so they ask instead of going around you with a personal account.' },
+          { id: 'p5-policy', text: 'Publish one-page acceptable use.' },
+          { id: 'p5-routing', text: 'Publish the model routing card.' },
+          { id: 'p5-train', text: '30-min training: Allow + routing.' },
+          { id: 'p5-path', text: 'Easy path to request a new tool.' },
         ],
       },
       {
-        id: 'phase-6',
-        label: 'P6',
+        id: 'review',
+        label: 'Review',
         free: false,
-        num: 'Phase 6',
-        title: 'Review on a Cadence',
+        num: 'Chapter 7',
+        title: 'Review on a cadence',
         eyebrow: 'monthly → quarterly',
-        rule: 'Put a 30-minute review on the calendar every month for the first quarter, then quarterly.',
-        body: 'Adoption drifts. Access accumulates, spend creeps, and shadow tools appear. A short recurring review keeps the system honest.',
+        rule: '30 min monthly in Q1, then quarterly.',
+        context: 'Drift is the default. Calendar the review.',
         checks: [
-          { id: 'p6-30-spend', text: 'First 30 days: check the spend split and the model mix. If premium use is high and quality is fine, coach the team down.' },
-          { id: 'p6-30-keys', text: 'First 30 days: confirm no stray API keys or personal accounts appeared.' },
-          { id: 'p6-q-int', text: 'Every quarter: audit connected integrations and remove anything unused.' },
-          { id: 'p6-q-data', text: 'Every quarter: re-verify data settings after any tool update, since defaults can reset.' },
-          { id: 'p6-q-retire', text: 'Every quarter: retire tools that did not earn their keep and consolidate overlap.' },
+          { id: 'p6-30-spend', text: 'Check spend split + model mix.' },
+          { id: 'p6-30-keys', text: 'No stray keys or personal accounts.' },
+          { id: 'p6-q-int', text: 'Audit integrations; remove unused.' },
+          { id: 'p6-q-data', text: 'Re-check data settings after updates.' },
+          { id: 'p6-q-retire', text: 'Retire tools that didn\'t earn keep.' },
         ],
       },
       {
         id: 'master',
         label: 'List',
         free: false,
-        title: 'Master Checklist',
-        eyebrow: 'one list · work top to bottom',
+        title: 'Master checklist',
+        eyebrow: 'one list · top to bottom',
       },
       {
         id: 'done',
         label: 'Done',
         free: false,
-        title: 'You\'re set up to adopt without the mess',
+        title: 'You\'re set to adopt without the mess',
         eyebrow: 'movement is mandatory',
       },
     ];
 
+    // Master list uses short strings; headers carry timing context
     const MASTER_SECTIONS = [
-      {
-        title: 'Before you buy',
-        ids: ['p0-job', 'p0-platform', 'p0-owner', 'p0-budget'],
-      },
-      {
-        title: 'Account setup',
-        ids: ['p1-plan', 'p1-seats', 'p1-limit', 'p1-login', 'p1-keys', 'p1-split'],
-      },
-      {
-        title: 'Access and permissions',
-        ids: ['p2-narrow', 'p2-decline', 'p2-admin', 'p2-list', 'p2-quarterly', 'p2-approve', 'p2-sso', 'p2-mfa'],
-      },
-      {
-        title: 'Data',
-        ids: ['p3-allowed', 'p3-train', 'p3-dpa', 'p3-tier'],
-      },
-      {
-        title: 'Cost and models',
-        ids: ['p4-default', 'p4-card', 'p4-escalate'],
-      },
-      {
-        title: 'People and rules',
-        ids: ['p5-policy', 'p5-routing', 'p5-train', 'p5-path'],
-      },
-      {
-        title: 'Ongoing review',
-        ids: ['p6-30-spend', 'p6-30-keys', 'p6-q-int', 'p6-q-data', 'p6-q-retire'],
-      },
+      { title: 'Before you buy', ids: ['p0-job', 'p0-platform', 'p0-owner', 'p0-budget'] },
+      { title: 'Account', ids: ['p1-plan', 'p1-seats', 'p1-limit', 'p1-login', 'p1-keys', 'p1-split'] },
+      { title: 'Access', ids: ['p2-narrow', 'p2-decline', 'p2-admin', 'p2-list', 'p2-quarterly', 'p2-approve', 'p2-sso', 'p2-mfa'] },
+      { title: 'Data', ids: ['p3-allowed', 'p3-train', 'p3-dpa', 'p3-tier'] },
+      { title: 'Cost & models', ids: ['p4-default', 'p4-card', 'p4-escalate'] },
+      { title: 'People & rules', ids: ['p5-policy', 'p5-routing', 'p5-train', 'p5-path'] },
+      { title: 'First 30 days', ids: ['p6-30-spend', 'p6-30-keys'] },
+      { title: 'Every quarter', ids: ['p6-q-int', 'p6-q-data', 'p6-q-retire'] },
     ];
 
     const CHECK_TEXT = {};
     PHASES.forEach((p) => (p.checks || []).forEach((c) => { CHECK_TEXT[c.id] = c.text; }));
 
-    // ── State ────────────────────────────────────────────────────
+    // Legacy id redirects (old phase-N links)
+    const LEGACY = {
+      'phase-0': 'decide', 'phase-1': 'account', 'phase-2': 'access',
+      'phase-3': 'data', 'phase-4': 'cost', 'phase-5': 'rules', 'phase-6': 'review',
+    };
+
     function loadState() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-      } catch {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+      catch { return {}; }
     }
     function saveState(partial) {
       const next = { ...loadState(), ...partial };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       return next;
     }
-    function isUnlocked() {
-      return !!loadState().unlocked;
-    }
-    function getChecks() {
-      return loadState().checks || {};
-    }
+    function isUnlocked() { return !!loadState().unlocked; }
+    function getChecks() { return loadState().checks || {}; }
     function setCheck(id, value) {
       const checks = { ...getChecks(), [id]: !!value };
       saveState({ checks });
@@ -517,7 +526,6 @@
 
     let currentId = 'intro';
 
-    // ── UI helpers ───────────────────────────────────────────────
     function toast(msg) {
       const el = document.getElementById('toast');
       el.textContent = msg;
@@ -525,24 +533,25 @@
       clearTimeout(toast._t);
       toast._t = setTimeout(() => el.classList.remove('show'), 2200);
     }
-
-    function canAccess(phase) {
-      return phase.free || isUnlocked();
-    }
-
+    function canAccess(phase) { return phase.free || isUnlocked(); }
     function progressPct() {
       const allIds = Object.keys(CHECK_TEXT);
       if (!allIds.length) return 0;
       const checks = getChecks();
-      const done = allIds.filter((id) => checks[id]).length;
-      return Math.round((done / allIds.length) * 100);
+      return Math.round((allIds.filter((id) => checks[id]).length / allIds.length) * 100);
+    }
+    function stepIndex() {
+      return Math.max(0, PHASES.findIndex((p) => p.id === currentId));
     }
 
     function updateChrome() {
       const unlocked = isUnlocked();
       document.getElementById('access-badge').textContent = unlocked ? 'unlocked' : 'free start';
       document.getElementById('progress-fill').style.width = progressPct() + '%';
-      document.getElementById('config-banner').classList.toggle('hidden', !!LEADS_ENDPOINT);
+      document.getElementById('config-banner').classList.toggle('show', !LEADS_ENDPOINT);
+      const phase = PHASES[stepIndex()];
+      document.getElementById('step-label').innerHTML = `<strong>${phase.label}</strong>${phase.title && phase.id !== 'intro' && phase.id !== 'gate' ? ' · ' + phase.title : ''}`;
+      document.getElementById('step-count').textContent = `${stepIndex() + 1} / ${PHASES.length}`;
       renderRail();
     }
 
@@ -553,12 +562,7 @@
         const checks = getChecks();
         const phaseChecks = (p.checks || []).map((c) => c.id);
         const done = phaseChecks.length && phaseChecks.every((id) => checks[id]);
-        const cls = [
-          'step-pill',
-          p.id === currentId ? 'active' : '',
-          done ? 'done' : '',
-          locked ? 'locked' : '',
-        ].filter(Boolean).join(' ');
+        const cls = ['step-pill', p.id === currentId ? 'active' : '', done ? 'done' : '', locked ? 'locked' : ''].filter(Boolean).join(' ');
         return `<button type="button" class="${cls}" data-go="${p.id}" ${locked ? 'aria-disabled="true"' : ''}>${p.label}</button>`;
       }).join('');
       rail.querySelectorAll('[data-go]').forEach((btn) => {
@@ -605,81 +609,81 @@
 
     function costLadderHtml() {
       return `
-        <div class="section-label"><span>## cost ladder</span><span class="subtle">as of July 2026 — verify before quoting</span></div>
+        <div class="section-label"><span>Cost ladder</span><span class="subtle">July 2026 — verify before quoting</span></div>
         <div class="table-wrap">
           <table>
-            <thead><tr><th>Model</th><th>Per 1M tokens (in / out)</th><th>Role</th></tr></thead>
+            <thead><tr><th>Model</th><th>Per 1M (in / out)</th><th>Role</th></tr></thead>
             <tbody>
-              <tr><td>Haiku 4.5</td><td>$1 / $5</td><td>Execution. High volume, low stakes, fast.</td></tr>
-              <tr><td>Sonnet 5</td><td>$2–3 / $10–15</td><td>The default. Most work belongs here.</td></tr>
-              <tr><td>Opus 4.8</td><td>$5 / $25</td><td>Hard reasoning. Deliberate escalation.</td></tr>
-              <tr><td>Fable 5</td><td>$10 / $50</td><td>Exception only. Requires a reason.</td></tr>
+              <tr><td>Haiku 4.5</td><td>$1 / $5</td><td>Execution. High volume, low stakes.</td></tr>
+              <tr><td>Sonnet 5</td><td>$2–3 / $10–15</td><td>Default. Most work lives here.</td></tr>
+              <tr><td>Opus 4.8</td><td>$5 / $25</td><td>Hard reasoning. Deliberate.</td></tr>
+              <tr><td>Fable 5</td><td>$10 / $50</td><td>Exception only.</td></tr>
             </tbody>
           </table>
         </div>
-        <p><span class="highlight">The question that drives routing:</span> Does this task require judgment, or just execution? Execution goes to the cheapest model. Judgment goes to the default. Hard judgment with an expensive failure mode escalates.</p>
-        <div class="section-label"><span>## model selection matrix</span><span class="subtle">task → model</span></div>
+        <p class="punch">Judgment or execution? Execution → cheap. Judgment → default. Hard + costly failure → escalate.</p>
+        <div class="section-label"><span>Task → model</span></div>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Task</th><th>Model</th><th>Why</th></tr></thead>
             <tbody>
-              <tr><td>Categorize tickets or leads</td><td>Haiku 4.5</td><td>Pattern match, no judgment</td></tr>
-              <tr><td>Extract fields from invoices</td><td>Haiku 4.5</td><td>Structured pull from known format</td></tr>
-              <tr><td>Summarize a transcript</td><td>Haiku 4.5</td><td>Compression, not analysis</td></tr>
-              <tr><td>Draft client email / proposal</td><td>Sonnet 5</td><td>Judgment on tone and framing</td></tr>
-              <tr><td>Write or debug code</td><td>Sonnet 5</td><td>Standard production reasoning</td></tr>
-              <tr><td>Synthesize research</td><td>Sonnet 5</td><td>Judgment on relevance and conflict</td></tr>
-              <tr><td>Multi-step agent workflow</td><td>Sonnet 5</td><td>Near-Opus quality at a fraction of cost</td></tr>
-              <tr><td>Architect a system / tradeoffs</td><td>Opus 4.8</td><td>Ambiguous, expensive to get wrong</td></tr>
-              <tr><td>Long-horizon autonomous agent</td><td>Fable 5</td><td>Failed loop costs more than the premium</td></tr>
+              <tr><td>Categorize tickets / leads</td><td>Haiku</td><td>Pattern match</td></tr>
+              <tr><td>Extract fields</td><td>Haiku</td><td>Structured pull</td></tr>
+              <tr><td>Summarize transcript</td><td>Haiku</td><td>Compression</td></tr>
+              <tr><td>Client email / proposal</td><td>Sonnet</td><td>Tone + framing</td></tr>
+              <tr><td>Code / debug</td><td>Sonnet</td><td>Production reasoning</td></tr>
+              <tr><td>Research synthesis</td><td>Sonnet</td><td>Relevance judgment</td></tr>
+              <tr><td>Multi-step agent</td><td>Sonnet</td><td>Quality / cost balance</td></tr>
+              <tr><td>System architecture</td><td>Opus</td><td>Expensive if wrong</td></tr>
+              <tr><td>Long autonomous run</td><td>Fable</td><td>Failed loop costs more</td></tr>
             </tbody>
           </table>
         </div>
       `;
     }
 
-    function lockedTeaser(targetId) {
+    function lockedTeaser() {
       return `
         <div class="locked-panel">
-          <p><strong class="highlight">This section is part of the full playbook.</strong><br/>
-          Unlock free with your name and email — Phases 1–6, master checklist, and cost ladder.</p>
-          <button type="button" class="btn primary" data-go="gate">Unlock the full guide →</button>
+          <p><span class="highlight">Full playbook is locked.</span><br/>Phases 1–7, cost ladder, master checklist — free unlock.</p>
+          <button type="button" class="btn primary" data-go="gate">Unlock →</button>
         </div>
       `;
     }
 
-    // ── Views ────────────────────────────────────────────────────
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     function renderIntro() {
       return `
-        <div class="eyebrow">adoption guide · Culture to Cash</div>
-        <h1>Installing AI in Your Business</h1>
-        <p class="lede">Most small businesses do not fail at AI because the tools are weak. They create a mess because adoption is enthusiastic and ungoverned.</p>
-        <div class="meta">
-          <span>phased rollout</span>
-          <span>checklists that stick</span>
-          <span>15–25 min</span>
-        </div>
-        <p>Someone signs up, connects the tool to email and files, clicks Allow on every permission, and invites the team — all before anyone has decided what job the tool is supposed to do.</p>
-        <p>The damage is rarely one big event. It is an integration with full inbox access nobody remembers granting, a contract pasted into a tool with unclear data retention, four overlapping subscriptions, and a bill that climbs because everyone reaches for the most expensive model by reflex.</p>
-        <p><span class="highlight">Enthusiasm is an asset. Undisciplined clicking is the liability.</span> This guide keeps the enthusiasm and removes the mess.</p>
-
-        <div class="section-label"><span>## five failure patterns</span><span class="subtle">tap one to jump ahead</span></div>
+        <div class="eyebrow">SMB adoption playbook</div>
+        <h1>Installing AI without the mess</h1>
+        <p class="punch">AI tools aren’t weak. Adoption is.</p>
+        <p class="punch" style="color:var(--green);font-weight:600;">Enthusiasm is an asset. Undisciplined clicking is the liability.</p>
+        <ul class="damage">
+          <li>Full inbox access nobody remembers granting</li>
+          <li>Contracts pasted into tools with murky retention</li>
+          <li>Four overlapping subscriptions</li>
+          <li>Premium models for routine work</li>
+        </ul>
+        <p class="map-line">decide → account → access → data → cost → rules → review</p>
+        <div class="section-label"><span>Five failure patterns</span><span class="subtle">tap to jump</span></div>
         <div class="card-grid">
           ${FAILURES.map((f) => `
             <button type="button" class="fail-card" data-fail="${f.phase}">
-              <div class="label">${f.id}</div>
               <strong>${f.title}</strong>
-              <p>${f.looks}</p>
-              <p style="margin-top:8px;color:var(--soft);font-size:.85rem;">Costs: ${f.cost}</p>
+              <p>${f.cost}</p>
             </button>
           `).join('')}
         </div>
-
         <div class="actions">
-          <button type="button" class="btn primary" data-go="phase-0">Start Phase 0 — free →</button>
+          <button type="button" class="btn primary" data-go="decide">Start free — Decide →</button>
           ${isUnlocked()
-            ? `<button type="button" class="btn" data-go="phase-1">Continue unlocked guide →</button>`
-            : `<button type="button" class="btn" data-go="gate">Unlock full playbook</button>`}
+            ? `<button type="button" class="btn ghost" data-go="account">Continue →</button>`
+            : `<button type="button" class="btn ghost" data-go="gate">Unlock full playbook</button>`}
         </div>
       `;
     }
@@ -688,39 +692,38 @@
       if (!canAccess(phase)) {
         return `
           <div class="eyebrow">${phase.eyebrow || ''}</div>
-          <h1>${phase.num ? phase.num + ' · ' : ''}${phase.title}</h1>
-          ${lockedTeaser(phase.id)}
+          <h1>${phase.title}</h1>
+          ${lockedTeaser()}
         `;
       }
 
       const state = loadState();
-      const jobField = phase.id === 'phase-0' ? `
+      const jobField = phase.id === 'decide' ? `
         <div class="job-box">
-          <label for="job-input">Your job to be done (one sentence)</label>
-          <textarea id="job-input" placeholder="e.g. Draft first-pass client follow-up emails from call notes">${state.job || ''}</textarea>
-          <button type="button" class="btn" id="save-job">Save job statement</button>
+          <label for="job-input">Job to be done (one sentence)</label>
+          <textarea id="job-input" placeholder="e.g. Draft first-pass client follow-ups from call notes">${state.job || ''}</textarea>
+          <button type="button" class="btn" id="save-job">Save</button>
         </div>
       ` : '';
 
       const idx = PHASES.findIndex((p) => p.id === phase.id);
       const prev = PHASES[idx - 1];
       let next = PHASES[idx + 1];
-      // After free phase-0, soft-nudge to gate if locked
-      if (phase.id === 'phase-0' && !isUnlocked()) next = PHASES.find((p) => p.id === 'gate');
-      const nextLabel = phase.id === 'phase-0' && !isUnlocked()
-        ? 'Unlock Phases 1–6'
-        : (next && next.id === 'master' ? 'Master checklist' : 'Next phase');
+      if (phase.id === 'decide' && !isUnlocked()) next = PHASES.find((p) => p.id === 'gate');
+      const nextLabel = phase.id === 'decide' && !isUnlocked()
+        ? 'Unlock rest'
+        : (next && next.id === 'master' ? 'Master list' : 'Next');
 
       return `
-        <div class="eyebrow">${phase.eyebrow || ''}</div>
-        <h1>${phase.num ? phase.num + ' · ' : ''}${phase.title}</h1>
-        <p class="lede">${phase.body || ''}</p>
+        <div class="eyebrow">${phase.num ? phase.num + ' · ' : ''}${phase.eyebrow || ''}</div>
+        <h1>${phase.title}</h1>
         <div class="rule">
           <div class="k">The rule</div>
           <p>${phase.rule || ''}</p>
         </div>
+        ${phase.context ? `<p class="context">${phase.context}</p>` : ''}
         ${jobField}
-        <div class="section-label"><span>## checklist</span><span class="subtle">checks save on this device</span></div>
+        <div class="section-label"><span>Checklist</span><span class="subtle">saves on this device</span></div>
         ${checklistHtml(phase.checks || [])}
         ${phase.showCostLadder ? costLadderHtml() : ''}
         ${navButtons(prev && prev.id, next && next.id, nextLabel)}
@@ -731,22 +734,20 @@
       if (isUnlocked()) {
         const s = loadState();
         return `
-          <div class="eyebrow">already unlocked</div>
-          <h1>You're in, ${escapeHtml(s.firstName || 'friend')}.</h1>
-          <p class="lede">Full playbook is open on this device. Progress saves as you check items off.</p>
+          <div class="eyebrow">unlocked</div>
+          <h1>You’re in${s.firstName ? ', ' + escapeHtml(s.firstName) : ''}.</h1>
+          <p class="lede">Full playbook open on this device. Progress saves as you check items off.</p>
           <div class="actions">
-            <button type="button" class="btn primary" data-go="phase-1">Continue to Phase 1 →</button>
-            <button type="button" class="btn ghost" data-go="master">Jump to master checklist</button>
+            <button type="button" class="btn primary" data-go="account">Continue to Account →</button>
+            <button type="button" class="btn ghost" data-go="master">Master list</button>
           </div>
         `;
       }
       return `
-        <div class="eyebrow">free unlock</div>
-        <h1>Unlock the full SMB AI Adoption playbook</h1>
-        <p class="lede">You've seen why mess happens and how to decide before you buy. Unlock Phases 1–6, the cost ladder, and the master checklist.</p>
+        <div class="eyebrow">free access</div>
+        <h1>Unlock the full playbook</h1>
+        <p class="lede">Chapters 2–7 · cost ladder · master checklist</p>
         <div class="gate-box">
-          <h2>Get free access</h2>
-          <p style="margin:0;color:var(--muted);">First name and email. No spam. You will not get an automated sequence — this just unlocks the guide and notifies Nick.</p>
           <form class="form-grid" id="lead-form" novalidate>
             <label>First name
               <input type="text" name="firstName" autocomplete="given-name" required placeholder="Nick" />
@@ -757,81 +758,63 @@
             <div class="hp" aria-hidden="true">
               <label>Company website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
             </div>
-            <button type="submit" class="btn primary" id="lead-submit">Unlock the guide →</button>
-            <p class="form-note">By continuing you agree we may email you about this guide. Unsubscribe anytime if we ever send marketing.</p>
+            <button type="submit" class="btn primary" id="lead-submit">Unlock →</button>
+            <p class="form-note">No spam.</p>
             <div class="form-error" id="lead-error"></div>
           </form>
         </div>
         <div class="actions">
-          <button type="button" class="btn ghost" data-go="phase-0">← Back to Phase 0</button>
+          <button type="button" class="btn ghost" data-go="decide">← Back</button>
         </div>
       `;
     }
 
     function renderMaster() {
       if (!isUnlocked()) {
-        return `
-          <div class="eyebrow">master checklist</div>
-          <h1>Master Checklist</h1>
-          ${lockedTeaser('master')}
-        `;
+        return `<div class="eyebrow">master checklist</div><h1>Master checklist</h1>${lockedTeaser()}`;
       }
-      const checks = getChecks();
       const sections = MASTER_SECTIONS.map((sec) => {
         const items = sec.ids.map((id) => ({ id, text: CHECK_TEXT[id] }));
-        return `
-          <div class="section-label"><span>## ${sec.title}</span></div>
-          ${checklistHtml(items)}
-        `;
+        return `<div class="section-label"><span>${sec.title}</span></div>${checklistHtml(items)}`;
       }).join('');
       return `
-        <div class="eyebrow">one consolidated list</div>
-        <h1>Master Checklist</h1>
-        <p class="lede">Work top to bottom on setup, then keep the review section running.</p>
+        <div class="eyebrow">one list</div>
+        <h1>Master checklist</h1>
+        <p class="lede">Top to bottom on setup. Keep review running.</p>
         <div class="status-row">
           <span id="master-pct">${progressPct()}% complete</span>
           <span>
-            <button type="button" class="btn" id="print-btn">Print checklist</button>
-            <button type="button" class="btn ghost" id="reset-checks">Reset checks</button>
+            <button type="button" class="btn" id="print-btn">Print</button>
+            <button type="button" class="btn ghost" id="reset-checks">Reset</button>
           </span>
         </div>
         ${sections}
-        ${navButtons('phase-6', 'done', 'Finish')}
+        ${navButtons('review', 'done', 'Finish')}
       `;
     }
 
     function renderDone() {
-      if (!isUnlocked()) return lockedTeaser('done');
+      if (!isUnlocked()) return lockedTeaser();
       const s = loadState();
       return `
         <div class="eyebrow">movement is mandatory</div>
-        <h1>You're set up to adopt without the mess</h1>
-        <p class="lede">${s.firstName ? escapeHtml(s.firstName) + ', y' : 'Y'}our checklist is ${progressPct()}% complete on this device. Keep the monthly review on the calendar for the first quarter.</p>
+        <h1>You’re set to adopt without the mess</h1>
+        <p class="lede">${s.firstName ? escapeHtml(s.firstName) + ' — ' : ''}${progressPct()}% of the checklist done on this device. Keep the monthly review on the calendar for Q1.</p>
         <div class="card-grid">
           <a class="info-card" href="../ai-maturity.html" style="text-decoration:none;">
-            <div class="label">strategy</div>
-            <strong>AI Maturity Model</strong>
-            <p>Where is the org on L0–L4? Pair this guide with the maturity spine.</p>
+            <strong>AI Maturity</strong>
+            <p>Where is the org on L0–L4?</p>
           </a>
           <a class="info-card" href="../open-tools/" style="text-decoration:none;">
-            <div class="label">tools</div>
             <strong>Open Tools</strong>
-            <p>Prompts and systems once the rules exist.</p>
+            <p>Prompts once the rules exist.</p>
           </a>
         </div>
         <div class="actions">
           <button type="button" class="btn primary" data-go="master">Back to checklist</button>
-          <button type="button" class="btn ghost" data-go="intro">Start over (keeps progress)</button>
+          <button type="button" class="btn ghost" data-go="intro">Start</button>
         </div>
       `;
-    }
-
-    function escapeHtml(str) {
-      return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
     }
 
     function render() {
@@ -858,7 +841,7 @@
         jobSave.addEventListener('click', () => {
           const val = (view.querySelector('#job-input').value || '').trim();
           saveState({ job: val });
-          toast(val ? 'Job statement saved' : 'Cleared');
+          toast(val ? 'Saved' : 'Cleared');
         });
       }
 
@@ -871,9 +854,9 @@
       const resetBtn = view.querySelector('#reset-checks');
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-          if (!confirm('Clear all checklist progress on this device?')) return;
+          if (!confirm('Clear checklist progress on this device?')) return;
           saveState({ checks: {} });
-          toast('Checklist reset');
+          toast('Reset');
           render();
         });
       }
@@ -882,16 +865,22 @@
     }
 
     function navigate(id) {
+      id = LEGACY[id] || id;
+      // Deep link #cost etc.
+      if (id.startsWith('#')) id = id.slice(1);
       const phase = PHASES.find((p) => p.id === id);
       if (!phase) return;
       if (!canAccess(phase)) {
         currentId = 'gate';
         render();
-        toast('Unlock to open that section');
+        toast('Unlock to open that chapter');
         return;
       }
       currentId = id;
       saveState({ lastStep: id });
+      if (location.hash !== '#' + id && id !== 'intro') {
+        history.replaceState(null, '', '#' + id);
+      }
       render();
     }
 
@@ -904,14 +893,10 @@
 
       const firstName = (form.firstName.value || '').trim();
       const email = (form.email.value || '').trim();
-      const website = (form.website.value || '').trim(); // honeypot
+      const website = (form.website.value || '').trim();
 
-      if (website) {
-        // Bot: pretend success
-        unlockLocal(firstName, email);
-        return;
-      }
-      if (!firstName) { err.textContent = 'First name is required.'; return; }
+      if (website) { unlockLocal(firstName, email); return; }
+      if (!firstName) { err.textContent = 'First name required.'; return; }
       if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         err.textContent = 'Enter a valid email.';
         return;
@@ -922,53 +907,45 @@
 
       try {
         if (!LEADS_ENDPOINT) {
-          // Preview mode until Sheet is connected
           unlockLocal(firstName, email);
-          toast('Unlocked (lead form not connected yet)');
+          toast('Unlocked (leads not connected yet)');
           return;
         }
-
         const res = await fetch(LEADS_ENDPOINT, {
           method: 'POST',
           mode: 'cors',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify({
-            firstName,
-            email,
-            source: 'ai-adoption',
-            page: location.href,
-            ts: new Date().toISOString(),
+            firstName, email, source: 'ai-adoption',
+            page: location.href, ts: new Date().toISOString(),
           }),
         });
-
-        // Apps Script often returns 200 with a text body; treat network OK as success
-        if (!res.ok) throw new Error('Request failed');
+        if (!res.ok) throw new Error('fail');
         unlockLocal(firstName, email);
-      } catch (ex) {
-        err.textContent = 'Could not unlock right now. Check your connection and try again.';
+      } catch {
+        err.textContent = 'Could not unlock. Check connection and try again.';
         submit.disabled = false;
-        submit.textContent = 'Unlock the guide →';
+        submit.textContent = 'Unlock →';
       }
     }
 
     function unlockLocal(firstName, email) {
       saveState({
-        unlocked: true,
-        firstName,
-        email,
+        unlocked: true, firstName, email,
         unlockedAt: new Date().toISOString(),
       });
       toast('Playbook unlocked');
-      currentId = 'phase-1';
+      currentId = 'account';
       render();
     }
 
-    // Boot
     (function boot() {
+      const hash = (location.hash || '').replace(/^#/, '');
       const s = loadState();
-      if (s.lastStep && PHASES.some((p) => p.id === s.lastStep && canAccess(p))) {
-        currentId = s.lastStep;
-      }
+      let start = hash || s.lastStep || 'intro';
+      start = LEGACY[start] || start;
+      if (PHASES.some((p) => p.id === start && canAccess(p))) currentId = start;
+      else if (PHASES.some((p) => p.id === start) && !canAccess(PHASES.find((p) => p.id === start))) currentId = 'gate';
       render();
     })();
   </script>

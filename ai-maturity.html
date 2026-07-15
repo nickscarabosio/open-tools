@@ -4,74 +4,139 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Organizational Maturity • Nick Scarabosio</title>
+  <meta name="description" content="Not a tech ladder. How much of the company has reorganized around AI — L0 to L4." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #070912; --panel: #0d1220; --panel-2: #11182a;
-      --line: rgba(163, 146, 255, 0.16); --line-strong: rgba(163, 146, 255, 0.28);
-      --text: #eef0ff; --muted: #9ea6c5; --soft: #6d7591;
-      --purple: #9d6cff; --purple-soft: rgba(157, 108, 255, 0.12);
-      --green: #7ef0b4; --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+      --bg: #070912;
+      --line: rgba(163, 146, 255, 0.16);
+      --line-strong: rgba(163, 146, 255, 0.35);
+      --text: #f2f3ff;
+      --body: #d8dcf0;
+      --muted: #9ea6c5;
+      --soft: #6d7591;
+      --purple: #9d6cff;
+      --purple-solid: #8b5cf6;
+      --purple-soft: rgba(157, 108, 255, 0.14);
+      --green: #7ef0b4;
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
       --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
       --sans: 'Inter', system-ui, sans-serif;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; min-height: 100%; }
     body {
-      background: radial-gradient(circle at 50% 0%, rgba(157, 108, 255, 0.18), transparent 32%),
-                  radial-gradient(circle at 85% 18%, rgba(126, 240, 180, 0.05), transparent 24%),
-                  var(--bg);
-      color: var(--text); font-family: var(--sans); -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(157, 108, 255, 0.18), transparent 32%),
+        radial-gradient(circle at 85% 18%, rgba(126, 240, 180, 0.05), transparent 24%),
+        var(--bg);
+      color: var(--text); font-family: var(--sans); font-size: 17px;
+      -webkit-font-smoothing: antialiased;
     }
     .wrap {
-      width: min(1100px, calc(100% - 20px)); margin: 16px auto 40px;
-      border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; overflow: hidden;
+      width: min(820px, calc(100% - 20px)); margin: 16px auto 40px;
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 24px; overflow: hidden;
       background: linear-gradient(180deg, rgba(17, 23, 39, 0.98), rgba(10, 13, 24, 0.98));
       box-shadow: var(--shadow);
     }
     .topbar {
-      display: flex; align-items: center; gap: 14px; padding: 16px 20px;
-      border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02);
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02); flex-wrap: wrap;
     }
-    .lights { display: flex; gap: 8px; }
-    .lights i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .lights { display: flex; gap: 7px; }
+    .lights i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
     .lights i:nth-child(1) { background: #ff5f57; }
     .lights i:nth-child(2) { background: #febc2e; }
     .lights i:nth-child(3) { background: #28c840; }
-    .title { margin: 0 auto; font-family: var(--mono); font-size: 13px; color: var(--muted); }
-    .content { padding: 40px 36px 48px; }
-    .hero { max-width: 780px; margin-bottom: 36px; }
-    .eyebrow { font-family: var(--mono); color: var(--green); text-transform: uppercase; letter-spacing: .16em; font-size: 11px; margin-bottom: 12px; }
-    h1 { margin: 0 0 14px; font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: .95; letter-spacing: -0.04em; }
-    .lede { margin: 0; max-width: 680px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
-    .throughline { margin-top: 20px; font-family: var(--mono); font-size: 13px; color: var(--soft); }
-    .level { border: 1px solid rgba(255,255,255,0.06); border-radius: 18px; background: rgba(255,255,255,0.02); margin-bottom: 18px; overflow: hidden; }
-    .level-header { padding: 20px 24px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid var(--line); }
-    .level-num { font-family: var(--mono); font-size: 13px; padding: 4px 12px; border-radius: 999px; background: var(--purple-soft); color: #d9ccff; border: 1px solid rgba(157,108,255,0.3); }
-    .level-title { font-size: 1.25rem; font-weight: 600; margin: 0; }
-    .level-question { font-family: var(--mono); font-size: 13px; color: var(--green); margin-top: 4px; }
-    .level-body { padding: 22px 24px; color: var(--muted); line-height: 1.7; }
-    .level-body p { margin: 0 0 14px; }
+    .title { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-right: auto; }
+    .nav { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav a {
+      font-family: var(--mono); font-size: 11px; color: var(--soft); text-decoration: none;
+      padding: 8px 11px; border-radius: 999px; border: 1px solid transparent; min-height: 36px;
+      display: inline-flex; align-items: center;
+    }
+    .nav a:hover, .nav a.active {
+      color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.04);
+    }
+    .content { padding: 36px 28px 44px; }
+    .eyebrow {
+      font-family: var(--mono); color: var(--green); text-transform: uppercase;
+      letter-spacing: .14em; font-size: 11px; margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0 0 14px; font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+      line-height: 1.05; letter-spacing: -0.035em;
+    }
+    .lede {
+      margin: 0 0 10px; max-width: 36rem; color: var(--body);
+      font-size: 1.08rem; line-height: 1.55; font-weight: 500;
+    }
+    .throughline {
+      margin: 0 0 32px; font-family: var(--mono); font-size: 13px; color: var(--green);
+    }
+    .level {
+      border: 1px solid rgba(255,255,255,0.07); border-radius: 16px;
+      background: rgba(255,255,255,0.02); margin-bottom: 12px; overflow: hidden;
+    }
+    .level summary {
+      list-style: none; cursor: pointer; padding: 18px 20px;
+      display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start;
+    }
+    .level summary::-webkit-details-marker { display: none; }
+    .level[open] { border-color: var(--line-strong); }
+    .level-num {
+      font-family: var(--mono); font-size: 12px; padding: 5px 10px; border-radius: 999px;
+      background: var(--purple-soft); color: #e4dbff; border: 1px solid rgba(157,108,255,0.3);
+    }
+    .level-title { font-size: 1.15rem; font-weight: 600; margin: 0 0 4px; color: var(--text); }
+    .level-question { font-family: var(--mono); font-size: 12px; color: var(--green); line-height: 1.4; }
+    .level-one {
+      margin: 8px 0 0; color: var(--body); font-size: .98rem; line-height: 1.5;
+    }
+    .level-body {
+      padding: 0 20px 18px 20px; margin-left: 52px; color: var(--muted);
+      font-size: .95rem; line-height: 1.6; border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 14px;
+    }
+    .level-body p { margin: 0 0 10px; }
+    .level-body p:last-child { margin: 0; }
     .highlight { color: var(--text); }
-    .trap { background: #1a1429; border: 1px solid rgba(157,108,255,0.3); border-radius: 18px; padding: 24px; margin: 32px 0; }
-    .footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--soft); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
-    .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
-    .nav a { font-family: var(--mono); font-size: 11px; color: var(--soft); text-decoration: none; padding: 6px 10px; border-radius: 999px; border: 1px solid transparent; }
-    .nav a:hover, .nav a.active { color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.03); }
-    .cta-box { margin: 28px 0 8px; border: 1px solid rgba(157,108,255,0.28); background: rgba(157,108,255,0.08); border-radius: 18px; padding: 22px 24px; }
-    .cta-box p { margin: 0 0 14px; color: var(--muted); line-height: 1.6; }
-    .cta-box a { display: inline-flex; text-decoration: none; border: 1px solid rgba(157,108,255,0.35); background: var(--purple-soft); color: var(--text); border-radius: 12px; padding: 12px 18px; font-weight: 600; }
-    .cta-box a:hover { background: rgba(157,108,255,0.2); }
-    @media (max-width: 700px) { .content { padding: 28px 20px; } }
+    .trap {
+      background: rgba(157,108,255,0.1); border: 1px solid rgba(157,108,255,0.32);
+      border-radius: 16px; padding: 20px 22px; margin: 28px 0 16px;
+    }
+    .trap strong { color: #e4dbff; display: block; margin-bottom: 10px; font-size: 1.05rem; }
+    .trap p { margin: 0 0 8px; color: var(--body); line-height: 1.5; }
+    .trap p:last-child { margin: 0; color: var(--green); font-weight: 600; }
+    .cta-box {
+      margin: 20px 0 8px; border: 1px solid rgba(139,92,246,0.4);
+      background: rgba(139,92,246,0.12); border-radius: 16px; padding: 20px 22px;
+    }
+    .cta-box p { margin: 0 0 14px; color: var(--body); line-height: 1.5; }
+    .cta-box a {
+      display: inline-flex; text-decoration: none; border: none;
+      background: var(--purple-solid); color: #fff; border-radius: 12px;
+      padding: 13px 18px; font-weight: 600; min-height: 46px; align-items: center;
+    }
+    .cta-box a:hover { filter: brightness(1.08); }
+    .footer {
+      margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line);
+      font-family: var(--mono); font-size: 11px; color: var(--soft);
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    @media (max-width: 700px) {
+      .content { padding: 28px 16px 36px; }
+      .level-body { margin-left: 0; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="topbar">
       <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="title">ai-maturity.md</div>
+      <div class="title">AI Maturity</div>
       <nav class="nav" aria-label="Site">
         <a href="./">Home</a>
         <a href="ai-adoption/">Guide</a>
@@ -81,107 +146,99 @@
     </div>
 
     <div class="content">
-      <div class="hero">
-        <div class="eyebrow">organizational evolution</div>
-        <h1>AI Organizational Maturity</h1>
-        <p class="lede">AI maturity is not a technology ladder. It measures how much of an organization has reorganized around AI — from one person’s disposition to a redesigned operating model. Each stage converts more human capability into productive capacity.</p>
-        <div class="throughline">The spine: human capability → productive capacity</div>
-      </div>
+      <div class="eyebrow">organizational evolution</div>
+      <h1>AI Organizational Maturity</h1>
+      <p class="lede">Not a tech ladder.<br/>How much of the company has reorganized around AI — from one person’s openness to a redesigned org.</p>
+      <div class="throughline">human capability → productive capacity</div>
 
-      <!-- Level 0 -->
-      <div class="level">
-        <div class="level-header">
+      <details class="level" open>
+        <summary>
           <span class="level-num">L0</span>
           <div>
             <div class="level-title">Openness</div>
             <div class="level-question">Am I open to the possibility that AI changes how I work?</div>
+            <p class="level-one"><span class="highlight">Disposition, not deployment.</span> Closed here blocks everything above.</p>
           </div>
-        </div>
+        </summary>
         <div class="level-body">
-          <p>The precondition for everyone. This is <span class="highlight">disposition, not deployment</span>. The only human-centered rung — different in kind.</p>
-          <p>Closed signals: avoidance &amp; delay, “that’s not for my role”, dismissing output after one bad attempt, quiet refusal to change how work gets done.</p>
-          <p>A closed Level 0 blocks every level above it.</p>
+          <p>Closed signals: avoidance &amp; delay, “not for my role,” one bad attempt then quit, quiet refusal to change how work gets done.</p>
         </div>
-      </div>
+      </details>
 
-      <!-- Level 1 -->
-      <div class="level">
-        <div class="level-header">
+      <details class="level">
+        <summary>
           <span class="level-num">L1</span>
           <div>
             <div class="level-title">Individual Productivity</div>
             <div class="level-question">How can AI help me do my work faster?</div>
+            <p class="level-one"><span class="highlight">Same work, faster.</span> Trap: adoption ≠ institutionalization.</p>
           </div>
-        </div>
+        </summary>
         <div class="level-body">
-          <p>Mainstream today. Existing work, done faster. Tools: Claude, ChatGPT, Copilot. Work: drafting, summarizing, document creation, code completion. Typical gain: 20–30% personal productivity.</p>
-          <p><span class="highlight">The trap:</span> mistaking adoption for institutionalization. Institutionalized Level 1 has standardized prompts, clear expectations, governance, and measured workflows.</p>
+          <p>Tools: Claude, ChatGPT, Copilot. Drafting, summarizing, docs, code. Typical gain: 20–30% personal productivity.</p>
+          <p>Institutionalized L1 has standardized prompts, expectations, governance, and measured workflows.</p>
         </div>
-      </div>
+      </details>
 
-      <!-- Level 2 -->
-      <div class="level">
-        <div class="level-header">
+      <details class="level">
+        <summary>
           <span class="level-num">L2</span>
           <div>
             <div class="level-title">Workflow Redesign</div>
             <div class="level-question">How should this workflow change because AI exists?</div>
+            <p class="level-one"><span class="highlight">Rebuild the process before agents.</span> Most orgs skip this.</p>
           </div>
-        </div>
+        </summary>
         <div class="level-body">
-          <p>The hard stage — organizational change, not technology. Whole processes (hiring, onboarding, sales, finance, customer service) are rebuilt around AI <em>before</em> agents are deployed.</p>
-          <p>Failure mode: inserting AI into a process without changing the process. Same shape = same speed.</p>
-          <p class="highlight">This is the stage most organizations skip — and the one that makes Level 3 pay off.</p>
+          <p>Hiring, onboarding, sales, finance, support — rebuilt around AI before agents deploy.</p>
+          <p>Failure mode: insert AI into the same process. Same shape = same speed.</p>
         </div>
-      </div>
+      </details>
 
-      <!-- Level 3 -->
-      <div class="level">
-        <div class="level-header">
+      <details class="level">
+        <summary>
           <span class="level-num">L3</span>
           <div>
             <div class="level-title">AI Operating Teams</div>
             <div class="level-question">What work should AI permanently own?</div>
+            <p class="level-one"><span class="highlight">Persistent AI teammates, not one-off agents.</span> Work runs continuous.</p>
           </div>
-        </div>
+        </summary>
         <div class="level-body">
-          <p>Each person operates with a persistent AI operating team — teammates, not agents. 10–50 teammates depending on role complexity.</p>
-          <p>Examples: Sales (Pipeline AI, Proposal AI, CRM AI, Meeting AI), Finance (AP AI, Forecast AI, Cash Flow AI, Contract AI), Marketing (Research AI, Content AI, Analytics AI).</p>
-          <p>Work happens continuously rather than in bursts.</p>
+          <p>10–50 teammates by role complexity. Sales: pipeline, proposal, CRM, meeting. Finance: AP, forecast, cash, contract. Marketing: research, content, analytics.</p>
         </div>
-      </div>
+      </details>
 
-      <!-- Level 4 -->
-      <div class="level">
-        <div class="level-header">
+      <details class="level">
+        <summary>
           <span class="level-num">L4</span>
           <div>
             <div class="level-title">AI-Native Organization</div>
             <div class="level-question">If AI existed from day one, how would we build this company differently?</div>
+            <p class="level-one"><span class="highlight">Redesign the company.</span> AI executes; humans judge.</p>
           </div>
-        </div>
+        </summary>
         <div class="level-body">
-          <p>The organization itself is redesigned. AI is built in parallel until it can run the operation.</p>
-          <p>Characteristics: org chart and decision rights redesigned • AI owns execution, humans own judgment • dramatically increased spans of control • fewer management layers • teams organized around outcomes, not departments.</p>
-          <p>Within ten years, many startups will be AI-native by default. Enterprise incumbents will lag dramatically.</p>
+          <p>Org chart and decision rights redesigned. Wider spans. Fewer layers. Teams around outcomes, not departments.</p>
+          <p>Startups will default here. Enterprise incumbents will lag.</p>
         </div>
-      </div>
+      </details>
 
-      <!-- The Trap -->
       <div class="trap">
-        <strong style="color:#d9ccff">The Trap</strong><br>
-        Most companies jump from Level 1 to Level 3 and skip Level 2 because vendors sell packaged “AI employees” before workflows are redesigned. The result: they automate a broken process and get disappointing ROI. <span style="color:#7ef0b4">Level 2 is what makes Level 3 pay off.</span>
+        <strong>The trap</strong>
+        <p>L1 → L3. Skip L2.</p>
+        <p>Vendors sell “AI employees” into unbroken processes.</p>
+        <p>L2 is what makes L3 pay.</p>
       </div>
 
       <div class="cta-box">
-        <strong style="color:var(--text);display:block;margin-bottom:8px;">Ready to roll out AI without the mess?</strong>
-        <p>The maturity model is where you are. The adoption guide is how you install AI safely — access, data, cost, and a master checklist.</p>
+        <p><strong style="color:var(--text);">Where you are → Maturity.<br/>How you install safely → Adoption Guide.</strong></p>
         <a href="ai-adoption/">Open the AI Adoption Guide →</a>
       </div>
 
       <div class="footer">
-        <div><strong>AI Organizational Maturity</strong> · 5 levels</div>
-        <div>Preserved from the Interactive AI Layers presentation</div>
+        <div>AI Organizational Maturity · L0–L4</div>
+        <div>Culture to Cash</div>
       </div>
     </div>
   </div>
