@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMB AI Adoption Guide • Nick Scarabosio</title>
+  <meta name="description" content="Installing AI in your business without the mess. A phased adoption guide and checklist for SMBs." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #070912; --panel: #0d1220; --panel-2: #11182a;
+      --line: rgba(163, 146, 255, 0.16); --line-strong: rgba(163, 146, 255, 0.28);
+      --text: #eef0ff; --muted: #9ea6c5; --soft: #6d7591;
+      --purple: #9d6cff; --purple-soft: rgba(157, 108, 255, 0.12);
+      --green: #7ef0b4; --green-soft: rgba(126, 240, 180, 0.12);
+      --shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+      --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --sans: 'Inter', system-ui, sans-serif;
+      --danger: #ff8b8b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      background:
+        radial-gradient(circle at 50% 0%, rgba(157, 108, 255, 0.18), transparent 32%),
+        radial-gradient(circle at 85% 18%, rgba(126, 240, 180, 0.05), transparent 24%),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: #c9b8ff; }
+    .wrap {
+      width: min(920px, calc(100% - 20px));
+      margin: 16px auto 40px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(17, 23, 39, 0.98), rgba(10, 13, 24, 0.98));
+      box-shadow: var(--shadow);
+    }
+    .topbar {
+      display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+      border-bottom: 1px solid var(--line); background: rgba(255,255,255,0.02);
+      flex-wrap: wrap;
+    }
+    .lights { display: flex; gap: 8px; flex-shrink: 0; }
+    .lights i { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+    .lights i:nth-child(1) { background: #ff5f57; }
+    .lights i:nth-child(2) { background: #febc2e; }
+    .lights i:nth-child(3) { background: #28c840; }
+    .title {
+      font-family: var(--mono); font-size: 13px; color: var(--muted);
+      display: flex; align-items: center; gap: 10px; margin-right: auto;
+    }
+    .badge {
+      padding: 4px 9px; border-radius: 999px;
+      border: 1px solid rgba(157,108,255,0.22); background: var(--purple-soft);
+      color: #d9ccff; text-transform: uppercase; font-size: 10px; letter-spacing: .12em;
+    }
+    .nav {
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .nav a {
+      font-family: var(--mono); font-size: 11px; color: var(--soft);
+      text-decoration: none; padding: 6px 10px; border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .nav a:hover, .nav a.active {
+      color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.03);
+    }
+    .progress-bar {
+      height: 3px; background: rgba(255,255,255,0.04);
+    }
+    .progress-bar > span {
+      display: block; height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--purple), var(--green));
+      transition: width .35s ease;
+    }
+    .content { padding: 34px 28px 36px; }
+    .eyebrow {
+      font-family: var(--mono); color: var(--green); text-transform: uppercase;
+      letter-spacing: .16em; font-size: 11px; margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0 0 14px; font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: .98; letter-spacing: -0.04em;
+    }
+    h2 { margin: 0 0 10px; font-size: 1.35rem; letter-spacing: -0.02em; }
+    h3 { margin: 0 0 8px; font-size: 1.05rem; }
+    .lede { margin: 0 0 18px; max-width: 720px; color: var(--muted); font-size: 1.05rem; line-height: 1.7; }
+    p { color: var(--muted); line-height: 1.7; margin: 0 0 14px; }
+    .highlight { color: var(--text); }
+    .meta {
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 24px;
+      font-family: var(--mono); font-size: 12px; color: var(--soft);
+    }
+    .meta span {
+      padding: 6px 10px; border-radius: 999px;
+      border: 1px solid var(--line); background: rgba(255,255,255,0.02);
+    }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .btn {
+      appearance: none; border: 1px solid var(--line); background: transparent;
+      color: var(--text); border-radius: 12px; padding: 12px 20px;
+      font: inherit; font-size: 14px; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.2s ease;
+    }
+    .btn:hover { border-color: var(--line-strong); background: rgba(157,108,255,0.08); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; }
+    .btn.primary {
+      border-color: rgba(157,108,255,0.35); background: var(--purple-soft); font-weight: 600;
+    }
+    .btn.primary:hover { background: rgba(157,108,255,0.2); }
+    .btn.ghost { color: var(--muted); }
+    .step-rail {
+      display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 28px;
+    }
+    .step-pill {
+      appearance: none; border: 1px solid var(--line); background: rgba(255,255,255,0.02);
+      color: var(--soft); border-radius: 999px; padding: 7px 11px;
+      font-family: var(--mono); font-size: 11px; cursor: pointer;
+    }
+    .step-pill:hover { color: var(--text); border-color: var(--line-strong); }
+    .step-pill.active {
+      color: #d9ccff; border-color: rgba(157,108,255,0.4); background: var(--purple-soft);
+    }
+    .step-pill.done { color: var(--green); border-color: rgba(126,240,180,0.28); }
+    .step-pill.locked { opacity: .45; cursor: not-allowed; }
+    .card-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;
+      margin: 18px 0 8px;
+    }
+    .fail-card, .info-card {
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 16px;
+      background: rgba(255,255,255,0.025); padding: 16px;
+      text-align: left; cursor: pointer; color: inherit; font: inherit;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .fail-card:hover, .info-card:hover {
+      border-color: var(--line-strong); background: rgba(157,108,255,0.06);
+    }
+    .fail-card .label, .info-card .label {
+      font-family: var(--mono); font-size: 11px; color: var(--green);
+      text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px;
+    }
+    .fail-card strong, .info-card strong { display: block; color: var(--text); margin-bottom: 6px; }
+    .fail-card p, .info-card p { margin: 0; font-size: .92rem; }
+    .rule {
+      border: 1px solid rgba(126,240,180,0.22); background: var(--green-soft);
+      border-radius: 16px; padding: 16px 18px; margin: 18px 0 20px;
+    }
+    .rule .k {
+      font-family: var(--mono); font-size: 11px; color: var(--green);
+      text-transform: uppercase; letter-spacing: .14em; margin-bottom: 8px;
+    }
+    .rule p { margin: 0; color: var(--text); font-weight: 500; }
+    .checklist { display: grid; gap: 10px; margin: 8px 0 18px; }
+    .check-item {
+      display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: start;
+      border: 1px solid rgba(255,255,255,0.06); border-radius: 14px;
+      background: rgba(255,255,255,0.02); padding: 14px 14px;
+      cursor: pointer; transition: border-color .15s ease;
+    }
+    .check-item:hover { border-color: var(--line-strong); }
+    .check-item.checked { border-color: rgba(126,240,180,0.28); background: rgba(126,240,180,0.05); }
+    .check-item input { margin-top: 3px; accent-color: var(--green); width: 16px; height: 16px; }
+    .check-item span { color: var(--muted); line-height: 1.55; font-size: .98rem; }
+    .check-item.checked span { color: var(--text); }
+    .section-label {
+      margin: 28px 0 14px; font-family: var(--mono); font-size: 11px; color: var(--soft);
+      text-transform: uppercase; letter-spacing: .16em;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .section-label .subtle { color: var(--muted); text-transform: none; letter-spacing: 0; font-size: 12px; }
+    .gate-box {
+      border: 1px solid rgba(157,108,255,0.28); background: rgba(157,108,255,0.08);
+      border-radius: 18px; padding: 22px; margin: 18px 0;
+    }
+    .gate-box h2 { margin-bottom: 8px; }
+    .form-grid { display: grid; gap: 12px; margin-top: 16px; max-width: 420px; }
+    label { display: grid; gap: 6px; font-family: var(--mono); font-size: 11px; color: var(--soft); text-transform: uppercase; letter-spacing: .1em; }
+    input[type="text"], input[type="email"] {
+      appearance: none; width: 100%; border-radius: 12px; border: 1px solid var(--line);
+      background: rgba(0,0,0,0.25); color: var(--text); padding: 12px 14px;
+      font: inherit; font-size: 15px;
+    }
+    input:focus { outline: none; border-color: rgba(157,108,255,0.5); }
+    .hp { position: absolute; left: -9999px; opacity: 0; height: 0; width: 0; overflow: hidden; }
+    .form-note { font-size: .88rem; color: var(--soft); margin: 10px 0 0; max-width: 420px; }
+    .form-error { color: var(--danger); font-size: .9rem; margin-top: 10px; min-height: 1.2em; }
+    .locked-panel {
+      border: 1px dashed rgba(163,146,255,0.28); border-radius: 18px;
+      padding: 28px 22px; text-align: center; background: rgba(255,255,255,0.02);
+      margin: 12px 0 8px;
+    }
+    .locked-panel p { max-width: 460px; margin: 0 auto 16px; }
+    table {
+      width: 100%; border-collapse: collapse; font-size: .92rem; margin: 12px 0 18px;
+    }
+    th, td {
+      text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted); vertical-align: top;
+    }
+    th { color: var(--soft); font-family: var(--mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500; }
+    td:first-child, th:first-child { color: var(--text); }
+    .table-wrap { overflow-x: auto; border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; }
+    .job-box {
+      display: grid; gap: 8px; margin: 8px 0 18px;
+    }
+    .job-box textarea {
+      width: 100%; min-height: 88px; border-radius: 12px; border: 1px solid var(--line);
+      background: rgba(0,0,0,0.25); color: var(--text); padding: 12px 14px;
+      font: inherit; font-size: 15px; resize: vertical;
+    }
+    .job-box textarea:focus { outline: none; border-color: rgba(157,108,255,0.5); }
+    .status-row {
+      display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+      justify-content: space-between; margin: 8px 0 18px;
+      font-family: var(--mono); font-size: 12px; color: var(--soft);
+    }
+    .pill-ok {
+      color: var(--green); border: 1px solid rgba(126,240,180,0.28);
+      background: var(--green-soft); border-radius: 999px; padding: 5px 10px;
+    }
+    .footer {
+      margin-top: 36px; padding-top: 20px; border-top: 1px solid var(--line);
+      font-family: var(--mono); font-size: 12px; color: var(--soft);
+      display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .hidden { display: none !important; }
+    .toast {
+      position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: #151b2e; border: 1px solid var(--line-strong); color: var(--text);
+      padding: 10px 16px; border-radius: 999px; font-family: var(--mono); font-size: 12px;
+      opacity: 0; pointer-events: none; transition: all .25s ease; z-index: 50;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .config-banner {
+      background: rgba(255, 188, 46, 0.1); border-bottom: 1px solid rgba(255, 188, 46, 0.28);
+      color: #f0d48a; font-family: var(--mono); font-size: 12px; padding: 10px 18px;
+    }
+    @media (max-width: 700px) {
+      .content { padding: 24px 16px 28px; }
+      .title span:first-child { display: none; }
+      h1 { font-size: 2rem; }
+      .check-item { padding: 12px; }
+    }
+    @media print {
+      body { background: white; color: black; }
+      .topbar, .progress-bar, .step-rail, .actions, .nav, .gate-box, .config-banner { display: none !important; }
+      .wrap { box-shadow: none; border: none; width: 100%; margin: 0; }
+      .check-item, p, td, th { color: black !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div id="config-banner" class="config-banner hidden">
+      Lead form is not connected yet. Finish the Google Sheet setup in SETUP.md, then paste the web app URL into LEADS_ENDPOINT.
+    </div>
+    <div class="topbar">
+      <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="title">
+        <span>ai-adoption.md</span>
+        <span class="badge" id="access-badge">free start</span>
+      </div>
+      <nav class="nav" aria-label="Site">
+        <a href="../">Home</a>
+        <a href="./" class="active">Guide</a>
+        <a href="../ai-maturity.html">Maturity</a>
+        <a href="../open-tools/">Tools</a>
+      </nav>
+    </div>
+    <div class="progress-bar" aria-hidden="true"><span id="progress-fill"></span></div>
+
+    <main class="content">
+      <div class="step-rail" id="step-rail" aria-label="Guide steps"></div>
+      <div id="view"></div>
+
+      <div class="footer">
+        <span>Culture to Cash · SMB AI Adoption Guide</span>
+        <span>Learning is valuable. Movement is mandatory.</span>
+      </div>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    // ─────────────────────────────────────────────────────────────
+    // PASTE your Google Apps Script web app URL here after setup.
+    // See SETUP.md in this folder.
+    // ─────────────────────────────────────────────────────────────
+    const LEADS_ENDPOINT = '';
+    const STORAGE_KEY = 'ai-adoption-v1';
+
+    const FAILURES = [
+      { id: 'sprawl', title: 'Tool sprawl', cost: 'Duplicate spend, no owner, no standard', phase: 'phase-0', looks: 'Overlapping subscriptions bought on impulse' },
+      { id: 'perms', title: 'Permission sprawl', cost: 'Broad access to email, files, and accounts', phase: 'phase-2', looks: 'Clicking Allow on every scope and connector' },
+      { id: 'data', title: 'Data leakage', cost: 'Loss of control over where data lives', phase: 'phase-3', looks: 'Pasting confidential data into any tool' },
+      { id: 'cost', title: 'Cost leakage', cost: 'A bill that climbs with no gain in quality', phase: 'phase-4', looks: 'Premium models and API keys for routine work' },
+      { id: 'shadow', title: 'Shadow AI', cost: 'Company data outside any account you control', phase: 'phase-5', looks: 'Staff using personal or unapproved accounts' },
+    ];
+
+    const PHASES = [
+      {
+        id: 'intro',
+        label: 'Start',
+        free: true,
+        title: 'Installing AI in Your Business',
+        eyebrow: 'adoption guide · SMB checklist',
+      },
+      {
+        id: 'phase-0',
+        label: 'P0',
+        free: true,
+        num: 'Phase 0',
+        title: 'Decide Before You Buy',
+        eyebrow: 'prevent tool sprawl',
+        rule: 'Name the job before you name the tool. If you cannot state the task in one sentence, you are not ready to buy.',
+        body: 'The first click is a subscription. Slow it down. Tool sprawl is cheaper to prevent than to unwind.',
+        checks: [
+          { id: 'p0-job', text: 'Write the specific job to be done in one sentence (e.g. draft first-pass client emails or summarize support tickets).' },
+          { id: 'p0-platform', text: 'Pick one primary platform to standardize on rather than three that overlap.' },
+          { id: 'p0-owner', text: 'Name a single owner accountable for the account, billing, and access. One person, not a committee.' },
+          { id: 'p0-budget', text: 'Set a starting budget and a date to review whether the tool earned its keep.' },
+        ],
+      },
+      {
+        id: 'gate',
+        label: 'Unlock',
+        free: true,
+        title: 'Unlock the full playbook',
+        eyebrow: 'free · no spam',
+      },
+      {
+        id: 'phase-1',
+        label: 'P1',
+        free: false,
+        num: 'Phase 1',
+        title: 'Set Up the Account',
+        eyebrow: 'seats · billing · auth',
+        rule: 'Subscription seats cover human work. API keys are for automation only. Never let a person\'s daily work run on a per-token key.',
+        body: 'This is where paying twice begins, usually invisibly. Get the plan and the login right before anyone starts working.',
+        checks: [
+          { id: 'p1-plan', text: 'Confirm the plan type and what it includes. On usage-based plans the seat fee is access only and every token bills at metered rates.' },
+          { id: 'p1-seats', text: 'Assign seats to actual users. Remove inactive or duplicate seats before they renew.' },
+          { id: 'p1-limit', text: 'Set an organization-wide monthly spend limit. Do not leave it on Unlimited.' },
+          { id: 'p1-login', text: 'Confirm each user is logged in on their subscription seat, not an API key. In Claude Code, run /status to verify.' },
+          { id: 'p1-keys', text: 'Search environments, shell profiles, and CI configs for stray API keys that silently route billing to metered rates.' },
+          { id: 'p1-split', text: 'Produce one view of monthly spend split three ways: seats, overage or usage credits, and API.' },
+        ],
+      },
+      {
+        id: 'phase-2',
+        label: 'P2',
+        free: false,
+        num: 'Phase 2',
+        title: 'Control Access and Permissions',
+        eyebrow: 'least privilege · connectors',
+        rule: 'Before you click Allow, read what is being granted. If a tool asks for more access than the job requires, say no and move on.',
+        body: 'This is the center of the click-happy problem. Modern AI tools ask to connect to your email, calendar, files, and chat. Each connection is a standing grant that lives on until someone revokes it.',
+        checks: [
+          { id: 'p2-narrow', text: 'Grant the narrowest access that does the job. Read-only over read-write, one folder over the whole drive, one mailbox over the whole domain.' },
+          { id: 'p2-decline', text: 'Decline any permission you cannot explain out loud. A meeting-notes tool does not need send-email access.' },
+          { id: 'p2-admin', text: 'Keep admin rights to one or two people. Everyone else gets standard access.' },
+          { id: 'p2-list', text: 'Keep a written list of every integration connected to your AI tools and what each one can reach.' },
+          { id: 'p2-quarterly', text: 'Review the list quarterly and disconnect anything unused. Every connector is a door left open.' },
+          { id: 'p2-approve', text: 'Require the account owner to approve new connectors. Do not let any user wire the company\'s email into a new tool unsupervised.' },
+          { id: 'p2-sso', text: 'Turn on single sign-on and require it, so access is tied to company identity and dies when someone leaves.' },
+          { id: 'p2-mfa', text: 'Enforce multi-factor authentication on the admin and billing accounts at minimum.' },
+        ],
+      },
+      {
+        id: 'phase-3',
+        label: 'P3',
+        free: false,
+        num: 'Phase 3',
+        title: 'Protect Your Data',
+        eyebrow: 'retention · training · DPA',
+        rule: 'If you would not email it to a stranger, do not paste it into a tool you have not vetted for data handling.',
+        body: 'Once staff are productive, the reflex is to paste anything into the tool. Decide in advance what is allowed in and what is never allowed in.',
+        checks: [
+          { id: 'p3-allowed', text: 'Define what data is allowed: general work is fine, and name the categories that are never pasted in (customer financials, health data, passwords, anything under contract).' },
+          { id: 'p3-train', text: 'Check the tool\'s data retention and training settings. Confirm whether your inputs train the vendor\'s models and turn that off if the option exists.' },
+          { id: 'p3-dpa', text: 'For anything regulated or confidential, get a data processing agreement in place before real data goes in.' },
+          { id: 'p3-tier', text: 'Prefer business or enterprise tiers, which typically carry stronger data commitments than consumer plans.' },
+        ],
+      },
+      {
+        id: 'phase-4',
+        label: 'P4',
+        free: false,
+        num: 'Phase 4',
+        title: 'Control Cost and Pick the Right Model',
+        eyebrow: 'default cheap · escalate on purpose',
+        rule: 'Make the affordable model the default. Escalating to a premium model should be a deliberate act with a reason.',
+        body: 'The spread between the cheapest and most expensive model is roughly ten times per unit of work. Teams reach for the biggest model by reflex and pay a premium on work a cheaper model does just as well.',
+        checks: [
+          { id: 'p4-default', text: 'Affordable model set as the visible default.' },
+          { id: 'p4-card', text: 'Routing card published so the team knows which model to use for what.' },
+          { id: 'p4-escalate', text: 'Escalation to premium models treated as deliberate, with a reason.' },
+        ],
+        showCostLadder: true,
+      },
+      {
+        id: 'phase-5',
+        label: 'P5',
+        free: false,
+        num: 'Phase 5',
+        title: 'Set the Rules and Train People',
+        eyebrow: 'one page · 30 minutes',
+        rule: 'Publish one page everyone reads: what is approved, what data is off limits, and which model to use for what.',
+        body: 'Tools do not create the mess. People clicking without a standard do. A one-page policy and a short training beat a long document nobody reads.',
+        checks: [
+          { id: 'p5-policy', text: 'Write a one-page acceptable use policy covering approved tools, data rules, and who to ask before connecting anything new.' },
+          { id: 'p5-routing', text: 'Publish the model routing card so the affordable model is the visible default.' },
+          { id: 'p5-train', text: 'Run a 30-minute training on the two habits that matter most: read before you click Allow, and route by judgment versus execution.' },
+          { id: 'p5-path', text: 'Give people a fast path to request a new tool, so they ask instead of going around you with a personal account.' },
+        ],
+      },
+      {
+        id: 'phase-6',
+        label: 'P6',
+        free: false,
+        num: 'Phase 6',
+        title: 'Review on a Cadence',
+        eyebrow: 'monthly → quarterly',
+        rule: 'Put a 30-minute review on the calendar every month for the first quarter, then quarterly.',
+        body: 'Adoption drifts. Access accumulates, spend creeps, and shadow tools appear. A short recurring review keeps the system honest.',
+        checks: [
+          { id: 'p6-30-spend', text: 'First 30 days: check the spend split and the model mix. If premium use is high and quality is fine, coach the team down.' },
+          { id: 'p6-30-keys', text: 'First 30 days: confirm no stray API keys or personal accounts appeared.' },
+          { id: 'p6-q-int', text: 'Every quarter: audit connected integrations and remove anything unused.' },
+          { id: 'p6-q-data', text: 'Every quarter: re-verify data settings after any tool update, since defaults can reset.' },
+          { id: 'p6-q-retire', text: 'Every quarter: retire tools that did not earn their keep and consolidate overlap.' },
+        ],
+      },
+      {
+        id: 'master',
+        label: 'List',
+        free: false,
+        title: 'Master Checklist',
+        eyebrow: 'one list · work top to bottom',
+      },
+      {
+        id: 'done',
+        label: 'Done',
+        free: false,
+        title: 'You\'re set up to adopt without the mess',
+        eyebrow: 'movement is mandatory',
+      },
+    ];
+
+    const MASTER_SECTIONS = [
+      {
+        title: 'Before you buy',
+        ids: ['p0-job', 'p0-platform', 'p0-owner', 'p0-budget'],
+      },
+      {
+        title: 'Account setup',
+        ids: ['p1-plan', 'p1-seats', 'p1-limit', 'p1-login', 'p1-keys', 'p1-split'],
+      },
+      {
+        title: 'Access and permissions',
+        ids: ['p2-narrow', 'p2-decline', 'p2-admin', 'p2-list', 'p2-quarterly', 'p2-approve', 'p2-sso', 'p2-mfa'],
+      },
+      {
+        title: 'Data',
+        ids: ['p3-allowed', 'p3-train', 'p3-dpa', 'p3-tier'],
+      },
+      {
+        title: 'Cost and models',
+        ids: ['p4-default', 'p4-card', 'p4-escalate'],
+      },
+      {
+        title: 'People and rules',
+        ids: ['p5-policy', 'p5-routing', 'p5-train', 'p5-path'],
+      },
+      {
+        title: 'Ongoing review',
+        ids: ['p6-30-spend', 'p6-30-keys', 'p6-q-int', 'p6-q-data', 'p6-q-retire'],
+      },
+    ];
+
+    const CHECK_TEXT = {};
+    PHASES.forEach((p) => (p.checks || []).forEach((c) => { CHECK_TEXT[c.id] = c.text; }));
+
+    // ── State ────────────────────────────────────────────────────
+    function loadState() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      } catch {
+        return {};
+      }
+    }
+    function saveState(partial) {
+      const next = { ...loadState(), ...partial };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      return next;
+    }
+    function isUnlocked() {
+      return !!loadState().unlocked;
+    }
+    function getChecks() {
+      return loadState().checks || {};
+    }
+    function setCheck(id, value) {
+      const checks = { ...getChecks(), [id]: !!value };
+      saveState({ checks });
+      return checks;
+    }
+
+    let currentId = 'intro';
+
+    // ── UI helpers ───────────────────────────────────────────────
+    function toast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => el.classList.remove('show'), 2200);
+    }
+
+    function canAccess(phase) {
+      return phase.free || isUnlocked();
+    }
+
+    function progressPct() {
+      const allIds = Object.keys(CHECK_TEXT);
+      if (!allIds.length) return 0;
+      const checks = getChecks();
+      const done = allIds.filter((id) => checks[id]).length;
+      return Math.round((done / allIds.length) * 100);
+    }
+
+    function updateChrome() {
+      const unlocked = isUnlocked();
+      document.getElementById('access-badge').textContent = unlocked ? 'unlocked' : 'free start';
+      document.getElementById('progress-fill').style.width = progressPct() + '%';
+      document.getElementById('config-banner').classList.toggle('hidden', !!LEADS_ENDPOINT);
+      renderRail();
+    }
+
+    function renderRail() {
+      const rail = document.getElementById('step-rail');
+      rail.innerHTML = PHASES.map((p) => {
+        const locked = !canAccess(p);
+        const checks = getChecks();
+        const phaseChecks = (p.checks || []).map((c) => c.id);
+        const done = phaseChecks.length && phaseChecks.every((id) => checks[id]);
+        const cls = [
+          'step-pill',
+          p.id === currentId ? 'active' : '',
+          done ? 'done' : '',
+          locked ? 'locked' : '',
+        ].filter(Boolean).join(' ');
+        return `<button type="button" class="${cls}" data-go="${p.id}" ${locked ? 'aria-disabled="true"' : ''}>${p.label}</button>`;
+      }).join('');
+      rail.querySelectorAll('[data-go]').forEach((btn) => {
+        btn.addEventListener('click', () => navigate(btn.getAttribute('data-go')));
+      });
+    }
+
+    function checklistHtml(items) {
+      const checks = getChecks();
+      return `<div class="checklist">${items.map((c) => `
+        <label class="check-item ${checks[c.id] ? 'checked' : ''}" data-check="${c.id}">
+          <input type="checkbox" ${checks[c.id] ? 'checked' : ''} />
+          <span>${c.text}</span>
+        </label>
+      `).join('')}</div>`;
+    }
+
+    function bindChecks(root) {
+      root.querySelectorAll('[data-check]').forEach((row) => {
+        const id = row.getAttribute('data-check');
+        const input = row.querySelector('input');
+        const sync = () => {
+          setCheck(id, input.checked);
+          row.classList.toggle('checked', input.checked);
+          updateChrome();
+          const pct = document.getElementById('master-pct');
+          if (pct) pct.textContent = progressPct() + '% complete';
+        };
+        input.addEventListener('change', sync);
+        row.addEventListener('click', (e) => {
+          if (e.target === input) return;
+          input.checked = !input.checked;
+          sync();
+        });
+      });
+    }
+
+    function navButtons(prevId, nextId, nextLabel) {
+      const parts = [];
+      if (prevId) parts.push(`<button type="button" class="btn ghost" data-go="${prevId}">← Back</button>`);
+      if (nextId) parts.push(`<button type="button" class="btn primary" data-go="${nextId}">${nextLabel || 'Continue'} →</button>`);
+      return `<div class="actions">${parts.join('')}</div>`;
+    }
+
+    function costLadderHtml() {
+      return `
+        <div class="section-label"><span>## cost ladder</span><span class="subtle">as of July 2026 — verify before quoting</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Model</th><th>Per 1M tokens (in / out)</th><th>Role</th></tr></thead>
+            <tbody>
+              <tr><td>Haiku 4.5</td><td>$1 / $5</td><td>Execution. High volume, low stakes, fast.</td></tr>
+              <tr><td>Sonnet 5</td><td>$2–3 / $10–15</td><td>The default. Most work belongs here.</td></tr>
+              <tr><td>Opus 4.8</td><td>$5 / $25</td><td>Hard reasoning. Deliberate escalation.</td></tr>
+              <tr><td>Fable 5</td><td>$10 / $50</td><td>Exception only. Requires a reason.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><span class="highlight">The question that drives routing:</span> Does this task require judgment, or just execution? Execution goes to the cheapest model. Judgment goes to the default. Hard judgment with an expensive failure mode escalates.</p>
+        <div class="section-label"><span>## model selection matrix</span><span class="subtle">task → model</span></div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Task</th><th>Model</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td>Categorize tickets or leads</td><td>Haiku 4.5</td><td>Pattern match, no judgment</td></tr>
+              <tr><td>Extract fields from invoices</td><td>Haiku 4.5</td><td>Structured pull from known format</td></tr>
+              <tr><td>Summarize a transcript</td><td>Haiku 4.5</td><td>Compression, not analysis</td></tr>
+              <tr><td>Draft client email / proposal</td><td>Sonnet 5</td><td>Judgment on tone and framing</td></tr>
+              <tr><td>Write or debug code</td><td>Sonnet 5</td><td>Standard production reasoning</td></tr>
+              <tr><td>Synthesize research</td><td>Sonnet 5</td><td>Judgment on relevance and conflict</td></tr>
+              <tr><td>Multi-step agent workflow</td><td>Sonnet 5</td><td>Near-Opus quality at a fraction of cost</td></tr>
+              <tr><td>Architect a system / tradeoffs</td><td>Opus 4.8</td><td>Ambiguous, expensive to get wrong</td></tr>
+              <tr><td>Long-horizon autonomous agent</td><td>Fable 5</td><td>Failed loop costs more than the premium</td></tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function lockedTeaser(targetId) {
+      return `
+        <div class="locked-panel">
+          <p><strong class="highlight">This section is part of the full playbook.</strong><br/>
+          Unlock free with your name and email — Phases 1–6, master checklist, and cost ladder.</p>
+          <button type="button" class="btn primary" data-go="gate">Unlock the full guide →</button>
+        </div>
+      `;
+    }
+
+    // ── Views ────────────────────────────────────────────────────
+    function renderIntro() {
+      return `
+        <div class="eyebrow">adoption guide · Culture to Cash</div>
+        <h1>Installing AI in Your Business</h1>
+        <p class="lede">Most small businesses do not fail at AI because the tools are weak. They create a mess because adoption is enthusiastic and ungoverned.</p>
+        <div class="meta">
+          <span>phased rollout</span>
+          <span>checklists that stick</span>
+          <span>15–25 min</span>
+        </div>
+        <p>Someone signs up, connects the tool to email and files, clicks Allow on every permission, and invites the team — all before anyone has decided what job the tool is supposed to do.</p>
+        <p>The damage is rarely one big event. It is an integration with full inbox access nobody remembers granting, a contract pasted into a tool with unclear data retention, four overlapping subscriptions, and a bill that climbs because everyone reaches for the most expensive model by reflex.</p>
+        <p><span class="highlight">Enthusiasm is an asset. Undisciplined clicking is the liability.</span> This guide keeps the enthusiasm and removes the mess.</p>
+
+        <div class="section-label"><span>## five failure patterns</span><span class="subtle">tap one to jump ahead</span></div>
+        <div class="card-grid">
+          ${FAILURES.map((f) => `
+            <button type="button" class="fail-card" data-fail="${f.phase}">
+              <div class="label">${f.id}</div>
+              <strong>${f.title}</strong>
+              <p>${f.looks}</p>
+              <p style="margin-top:8px;color:var(--soft);font-size:.85rem;">Costs: ${f.cost}</p>
+            </button>
+          `).join('')}
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn primary" data-go="phase-0">Start Phase 0 — free →</button>
+          ${isUnlocked()
+            ? `<button type="button" class="btn" data-go="phase-1">Continue unlocked guide →</button>`
+            : `<button type="button" class="btn" data-go="gate">Unlock full playbook</button>`}
+        </div>
+      `;
+    }
+
+    function renderPhase(phase) {
+      if (!canAccess(phase)) {
+        return `
+          <div class="eyebrow">${phase.eyebrow || ''}</div>
+          <h1>${phase.num ? phase.num + ' · ' : ''}${phase.title}</h1>
+          ${lockedTeaser(phase.id)}
+        `;
+      }
+
+      const state = loadState();
+      const jobField = phase.id === 'phase-0' ? `
+        <div class="job-box">
+          <label for="job-input">Your job to be done (one sentence)</label>
+          <textarea id="job-input" placeholder="e.g. Draft first-pass client follow-up emails from call notes">${state.job || ''}</textarea>
+          <button type="button" class="btn" id="save-job">Save job statement</button>
+        </div>
+      ` : '';
+
+      const idx = PHASES.findIndex((p) => p.id === phase.id);
+      const prev = PHASES[idx - 1];
+      let next = PHASES[idx + 1];
+      // After free phase-0, soft-nudge to gate if locked
+      if (phase.id === 'phase-0' && !isUnlocked()) next = PHASES.find((p) => p.id === 'gate');
+      const nextLabel = phase.id === 'phase-0' && !isUnlocked()
+        ? 'Unlock Phases 1–6'
+        : (next && next.id === 'master' ? 'Master checklist' : 'Next phase');
+
+      return `
+        <div class="eyebrow">${phase.eyebrow || ''}</div>
+        <h1>${phase.num ? phase.num + ' · ' : ''}${phase.title}</h1>
+        <p class="lede">${phase.body || ''}</p>
+        <div class="rule">
+          <div class="k">The rule</div>
+          <p>${phase.rule || ''}</p>
+        </div>
+        ${jobField}
+        <div class="section-label"><span>## checklist</span><span class="subtle">checks save on this device</span></div>
+        ${checklistHtml(phase.checks || [])}
+        ${phase.showCostLadder ? costLadderHtml() : ''}
+        ${navButtons(prev && prev.id, next && next.id, nextLabel)}
+      `;
+    }
+
+    function renderGate() {
+      if (isUnlocked()) {
+        const s = loadState();
+        return `
+          <div class="eyebrow">already unlocked</div>
+          <h1>You're in, ${escapeHtml(s.firstName || 'friend')}.</h1>
+          <p class="lede">Full playbook is open on this device. Progress saves as you check items off.</p>
+          <div class="actions">
+            <button type="button" class="btn primary" data-go="phase-1">Continue to Phase 1 →</button>
+            <button type="button" class="btn ghost" data-go="master">Jump to master checklist</button>
+          </div>
+        `;
+      }
+      return `
+        <div class="eyebrow">free unlock</div>
+        <h1>Unlock the full SMB AI Adoption playbook</h1>
+        <p class="lede">You've seen why mess happens and how to decide before you buy. Unlock Phases 1–6, the cost ladder, and the master checklist.</p>
+        <div class="gate-box">
+          <h2>Get free access</h2>
+          <p style="margin:0;color:var(--muted);">First name and email. No spam. You will not get an automated sequence — this just unlocks the guide and notifies Nick.</p>
+          <form class="form-grid" id="lead-form" novalidate>
+            <label>First name
+              <input type="text" name="firstName" autocomplete="given-name" required placeholder="Nick" />
+            </label>
+            <label>Email
+              <input type="email" name="email" autocomplete="email" required placeholder="you@company.com" />
+            </label>
+            <div class="hp" aria-hidden="true">
+              <label>Company website <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <button type="submit" class="btn primary" id="lead-submit">Unlock the guide →</button>
+            <p class="form-note">By continuing you agree we may email you about this guide. Unsubscribe anytime if we ever send marketing.</p>
+            <div class="form-error" id="lead-error"></div>
+          </form>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn ghost" data-go="phase-0">← Back to Phase 0</button>
+        </div>
+      `;
+    }
+
+    function renderMaster() {
+      if (!isUnlocked()) {
+        return `
+          <div class="eyebrow">master checklist</div>
+          <h1>Master Checklist</h1>
+          ${lockedTeaser('master')}
+        `;
+      }
+      const checks = getChecks();
+      const sections = MASTER_SECTIONS.map((sec) => {
+        const items = sec.ids.map((id) => ({ id, text: CHECK_TEXT[id] }));
+        return `
+          <div class="section-label"><span>## ${sec.title}</span></div>
+          ${checklistHtml(items)}
+        `;
+      }).join('');
+      return `
+        <div class="eyebrow">one consolidated list</div>
+        <h1>Master Checklist</h1>
+        <p class="lede">Work top to bottom on setup, then keep the review section running.</p>
+        <div class="status-row">
+          <span id="master-pct">${progressPct()}% complete</span>
+          <span>
+            <button type="button" class="btn" id="print-btn">Print checklist</button>
+            <button type="button" class="btn ghost" id="reset-checks">Reset checks</button>
+          </span>
+        </div>
+        ${sections}
+        ${navButtons('phase-6', 'done', 'Finish')}
+      `;
+    }
+
+    function renderDone() {
+      if (!isUnlocked()) return lockedTeaser('done');
+      const s = loadState();
+      return `
+        <div class="eyebrow">movement is mandatory</div>
+        <h1>You're set up to adopt without the mess</h1>
+        <p class="lede">${s.firstName ? escapeHtml(s.firstName) + ', y' : 'Y'}our checklist is ${progressPct()}% complete on this device. Keep the monthly review on the calendar for the first quarter.</p>
+        <div class="card-grid">
+          <a class="info-card" href="../ai-maturity.html" style="text-decoration:none;">
+            <div class="label">strategy</div>
+            <strong>AI Maturity Model</strong>
+            <p>Where is the org on L0–L4? Pair this guide with the maturity spine.</p>
+          </a>
+          <a class="info-card" href="../open-tools/" style="text-decoration:none;">
+            <div class="label">tools</div>
+            <strong>Open Tools</strong>
+            <p>Prompts and systems once the rules exist.</p>
+          </a>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn primary" data-go="master">Back to checklist</button>
+          <button type="button" class="btn ghost" data-go="intro">Start over (keeps progress)</button>
+        </div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function render() {
+      const phase = PHASES.find((p) => p.id === currentId) || PHASES[0];
+      const view = document.getElementById('view');
+      if (phase.id === 'intro') view.innerHTML = renderIntro();
+      else if (phase.id === 'gate') view.innerHTML = renderGate();
+      else if (phase.id === 'master') view.innerHTML = renderMaster();
+      else if (phase.id === 'done') view.innerHTML = renderDone();
+      else view.innerHTML = renderPhase(phase);
+
+      updateChrome();
+      bindChecks(view);
+
+      view.querySelectorAll('[data-go]').forEach((el) => {
+        el.addEventListener('click', () => navigate(el.getAttribute('data-go')));
+      });
+      view.querySelectorAll('[data-fail]').forEach((el) => {
+        el.addEventListener('click', () => navigate(el.getAttribute('data-fail')));
+      });
+
+      const jobSave = view.querySelector('#save-job');
+      if (jobSave) {
+        jobSave.addEventListener('click', () => {
+          const val = (view.querySelector('#job-input').value || '').trim();
+          saveState({ job: val });
+          toast(val ? 'Job statement saved' : 'Cleared');
+        });
+      }
+
+      const form = view.querySelector('#lead-form');
+      if (form) form.addEventListener('submit', onLeadSubmit);
+
+      const printBtn = view.querySelector('#print-btn');
+      if (printBtn) printBtn.addEventListener('click', () => window.print());
+
+      const resetBtn = view.querySelector('#reset-checks');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (!confirm('Clear all checklist progress on this device?')) return;
+          saveState({ checks: {} });
+          toast('Checklist reset');
+          render();
+        });
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigate(id) {
+      const phase = PHASES.find((p) => p.id === id);
+      if (!phase) return;
+      if (!canAccess(phase)) {
+        currentId = 'gate';
+        render();
+        toast('Unlock to open that section');
+        return;
+      }
+      currentId = id;
+      saveState({ lastStep: id });
+      render();
+    }
+
+    async function onLeadSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const err = document.getElementById('lead-error');
+      const submit = document.getElementById('lead-submit');
+      err.textContent = '';
+
+      const firstName = (form.firstName.value || '').trim();
+      const email = (form.email.value || '').trim();
+      const website = (form.website.value || '').trim(); // honeypot
+
+      if (website) {
+        // Bot: pretend success
+        unlockLocal(firstName, email);
+        return;
+      }
+      if (!firstName) { err.textContent = 'First name is required.'; return; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        err.textContent = 'Enter a valid email.';
+        return;
+      }
+
+      submit.disabled = true;
+      submit.textContent = 'Unlocking…';
+
+      try {
+        if (!LEADS_ENDPOINT) {
+          // Preview mode until Sheet is connected
+          unlockLocal(firstName, email);
+          toast('Unlocked (lead form not connected yet)');
+          return;
+        }
+
+        const res = await fetch(LEADS_ENDPOINT, {
+          method: 'POST',
+          mode: 'cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify({
+            firstName,
+            email,
+            source: 'ai-adoption',
+            page: location.href,
+            ts: new Date().toISOString(),
+          }),
+        });
+
+        // Apps Script often returns 200 with a text body; treat network OK as success
+        if (!res.ok) throw new Error('Request failed');
+        unlockLocal(firstName, email);
+      } catch (ex) {
+        err.textContent = 'Could not unlock right now. Check your connection and try again.';
+        submit.disabled = false;
+        submit.textContent = 'Unlock the guide →';
+      }
+    }
+
+    function unlockLocal(firstName, email) {
+      saveState({
+        unlocked: true,
+        firstName,
+        email,
+        unlockedAt: new Date().toISOString(),
+      });
+      toast('Playbook unlocked');
+      currentId = 'phase-1';
+      render();
+    }
+
+    // Boot
+    (function boot() {
+      const s = loadState();
+      if (s.lastStep && PHASES.some((p) => p.id === s.lastStep && canAccess(p))) {
+        currentId = s.lastStep;
+      }
+      render();
+    })();
+  </script>
+</body>
+</html>
