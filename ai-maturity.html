@@ -57,6 +57,13 @@
     .highlight { color: var(--text); }
     .trap { background: #1a1429; border: 1px solid rgba(157,108,255,0.3); border-radius: 18px; padding: 24px; margin: 32px 0; }
     .footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; color: var(--soft); display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+    .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-left: auto; }
+    .nav a { font-family: var(--mono); font-size: 11px; color: var(--soft); text-decoration: none; padding: 6px 10px; border-radius: 999px; border: 1px solid transparent; }
+    .nav a:hover, .nav a.active { color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.03); }
+    .cta-box { margin: 28px 0 8px; border: 1px solid rgba(157,108,255,0.28); background: rgba(157,108,255,0.08); border-radius: 18px; padding: 22px 24px; }
+    .cta-box p { margin: 0 0 14px; color: var(--muted); line-height: 1.6; }
+    .cta-box a { display: inline-flex; text-decoration: none; border: 1px solid rgba(157,108,255,0.35); background: var(--purple-soft); color: var(--text); border-radius: 12px; padding: 12px 18px; font-weight: 600; }
+    .cta-box a:hover { background: rgba(157,108,255,0.2); }
     @media (max-width: 700px) { .content { padding: 28px 20px; } }
   </style>
 </head>
@@ -65,6 +72,12 @@
     <div class="topbar">
       <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="title">ai-maturity.md</div>
+      <nav class="nav" aria-label="Site">
+        <a href="./">Home</a>
+        <a href="ai-adoption/">Guide</a>
+        <a href="ai-maturity.html" class="active">Maturity</a>
+        <a href="open-tools/">Tools</a>
+      </nav>
     </div>
 
     <div class="content">
@@ -158,6 +171,12 @@
       <div class="trap">
         <strong style="color:#d9ccff">The Trap</strong><br>
         Most companies jump from Level 1 to Level 3 and skip Level 2 because vendors sell packaged “AI employees” before workflows are redesigned. The result: they automate a broken process and get disappointing ROI. <span style="color:#7ef0b4">Level 2 is what makes Level 3 pay off.</span>
+      </div>
+
+      <div class="cta-box">
+        <strong style="color:var(--text);display:block;margin-bottom:8px;">Ready to roll out AI without the mess?</strong>
+        <p>The maturity model is where you are. The adoption guide is how you install AI safely — access, data, cost, and a master checklist.</p>
+        <a href="ai-adoption/">Open the AI Adoption Guide →</a>
       </div>
 
       <div class="footer">
